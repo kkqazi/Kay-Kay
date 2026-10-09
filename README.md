@@ -1,4 +1,4 @@
-# Labour Cost Command Cockpit — review v6.4.1
+# Labour Cost Command Cockpit — review v6.4.2
 
 A portable, responsive review copy of the supplied FY27 Labour Command Cockpit. The original supplied HTML remains unchanged. This copy contains the embedded labour data; keep this repository private.
 
@@ -12,7 +12,11 @@ Alternatively, use **Code → Download ZIP** for this branch, extract the ZIP, a
 
 ## What changed
 
-Version 6.4.1 replaces colour-based interpretations with neutral numbers and explicit comparison labels. The efficiency card shows the distance from its budget target, the cost bridge states its signed arithmetic, and missing charges are distinguished from zero cost. The underlying calculations and source records are unchanged.
+Version 6.4.2 fixes Quality House audit visibility and includes the supplied 9 October pack. Quality House follows the header year and weeks by default; rolling windows include the current week. It shows the dates and audit coverage, explains empty selections, and offers a button to show the latest audit. Actions are explicitly labelled as using all dates for the selected unit.
+
+The supplied pack contains one live Unit A audit, dated 9 October 2026: maturity 4.00/5, with Coaching weakest at 2.00/5, and one open action. Other units remain unscored. This is limited audit coverage, not evidence of maturity across the whole site. The original labour records and cost calculations are retained.
+
+Version 6.4.1 replaced colour-based interpretations with neutral numbers and explicit comparison labels. The efficiency card shows the distance from its budget target, the cost bridge states its signed arithmetic, and missing charges are distinguished from zero cost.
 
 - Cost Overview opens first, with recorded charges separate from modelled direct-labour variance.
 - Product mix and the execution/other residual reconcile to the modelled gap.
@@ -28,3 +32,7 @@ See [review notes and validation](Review_Notes.md) for coverage, calculations an
 ![Cost overview on desktop](previews/Cost_Overview_Desktop.png)
 
 [Mobile preview](previews/Cost_Overview_Mobile.png)
+
+![Quality House on desktop](previews/Quality_House_Desktop.png)
+
+[Quality House mobile preview](previews/Quality_House_Mobile.png)
