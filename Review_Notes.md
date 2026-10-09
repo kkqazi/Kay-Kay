@@ -1,4 +1,4 @@
-# Cost Review v6.4.0
+# Cost Review v6.4.1
 
 Open the revised HTML in a current Chrome or Edge browser. This is a portable review copy with the supplied data retained. Your original HTML is unchanged.
 
@@ -24,3 +24,9 @@ Validation:
 Limits to bear in mind:
 
 The file is still approximately 25.7MB because it retains the embedded history. Recorded charges have partial coverage; for ABC FY27 YTD, Detail1 covers five of twelve reported unit-days. Missing charges are excluded and not estimated. Site charges include ABC, D and K and exclude unassigned units. Modelled £ variances are not payroll spend or product profit. Existing forecasts remain scenarios. A portable shared HTML file still does not provide transactional multi-user collaboration.
+
+## Clarity update v6.4.1
+
+The Cost Overview now uses neutral numbers and explicit status labels: Over budget / Under budget, Less / More labour required, Above / Below the mix-adjusted allowance, and Below / Above the budget efficiency target. The efficiency card shows the percentage-point distance from target. Modelled requirements are distinguished from booked savings, and missing charges are distinguished from zero cost. The cost bridge states the signed arithmetic explicitly. Calculations and source records are unchanged.
+
+For Site FY27 W1, the model shows £24,522 over budget: a £25,661 lower mix requirement plus a £50,183 remaining hours gap. Efficiency is 113.6% against 119.2%, or 5.6 percentage points below target. Browser checks reproduced these values, confirmed neutral number colours, and verified 360/390/768/1440px layouts plus all eight year/unit scopes.

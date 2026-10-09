@@ -1,4 +1,4 @@
-# Labour Cost Command Cockpit — review v6.4
+# Labour Cost Command Cockpit — review v6.4.1
 
 A portable, responsive review copy of the supplied FY27 Labour Command Cockpit. The original supplied HTML remains unchanged. This copy contains the embedded labour data; keep this repository private.
 
@@ -11,6 +11,8 @@ A portable, responsive review copy of the supplied FY27 Labour Command Cockpit. 
 Alternatively, use **Code → Download ZIP** for this branch, extract the ZIP, and open the HTML from the extracted folder. The dashboard does not need a build or an installation.
 
 ## What changed
+
+Version 6.4.1 replaces colour-based interpretations with neutral numbers and explicit comparison labels. The efficiency card shows the distance from its budget target, the cost bridge states its signed arithmetic, and missing charges are distinguished from zero cost. The underlying calculations and source records are unchanged.
 
 - Cost Overview opens first, with recorded charges separate from modelled direct-labour variance.
 - Product mix and the execution/other residual reconcile to the modelled gap.
