@@ -1,5 +1,7 @@
 # Training and surveys — v6.6
 
+**The standalone application is now the primary training dashboard.** Use [ABC_Training_Survey_Dashboard_v1.html](ABC_Training_Survey_Dashboard_v1.html) and the [standalone/JSON-transfer guide](Training_Standalone_Guide.md). These notes describe the shared training rules and the earlier integrated v6.6 delivery; companion cockpit v6.6.1 adds JSON import/export.
+
 ## Open and start
 
 Download `Cockpit_Cost_PO_Training_v6_6.html` using GitHub’s **Download raw file** button. Open it in a current Chrome or Edge browser. Training is under **Operations & People → Training & Surveys**; this version opens there first. Existing Cost, PO, Quality and People data are retained.

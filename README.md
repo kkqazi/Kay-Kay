@@ -1,16 +1,22 @@
-# Labour Cost Command Cockpit — Cost, PO & Training v6.6
+# Labour cockpit and standalone training dashboard
 
-A portable, responsive review copy of the supplied FY27 Labour Command Cockpit, with purchase order management and roster-backed training. The original supplied HTML remains unchanged. This copy contains embedded labour and PO data; keep this repository private.
+This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
 ## Download and open
 
-1. Open [Cockpit_Cost_PO_Training_v6_6.html](Cockpit_Cost_PO_Training_v6_6.html) on GitHub.
-2. Click **Download raw file** near the top right of the file view. The HTML is approximately 27.3 MB, so GitHub may not display its contents.
-3. Save it with the `.html` extension, then open the downloaded file in a current Chrome or Edge browser.
+For training, use **[ABC_Training_Survey_Dashboard_v1.html](ABC_Training_Survey_Dashboard_v1.html)** — approximately **1 MB**, with both rosters already included. It runs independently of the cockpit.
 
-Alternatively, use **Code → Download ZIP** for this branch, extract the ZIP, and open the HTML from the extracted folder. The dashboard does not need a build or an installation.
+1. Open the file on GitHub and click **Download raw file**.
+2. Save it with the `.html` extension, then open it in a current Chrome or Edge browser.
+3. Configure the four Group training titles and cycle starts, then use **Save as copy** after changes.
+
+To bring its records into the command centre, use **Export JSON for cockpit**, then **Import training JSON** in **[Cockpit_Cost_PO_Training_v6_6_1.html](Cockpit_Cost_PO_Training_v6_6_1.html)**. Download that companion cockpit the same way; it is approximately 27.7 MB. JSON import replaces only its training snapshot and provides an undo option.
+
+See the **[standalone and JSON-transfer guide](Training_Standalone_Guide.md)** for the workflow and validation. Separate browsers do not automatically synchronise. The dashboards do not require a build or installation.
 
 ## What changed
+
+Standalone Training v1 separates training and roster management from the cockpit. Companion cockpit v6.6.1 adds a validated JSON snapshot importer/exporter, optional video transfer, import preview and undo, while preserving all prior cockpit datasets. The earlier integrated v6.6 file remains available as a historical review version.
 
 Version 6.6 adds **Training & Surveys** under Operations & People, with both supplied April–March rosters, editable employees and courses, four Group training setup slots, three-calendar-month cycles, completion evidence and corrections, surveys, roster training mapping, future availability planning, daily/weekly/financial-period reports, Excel/PDF exports, video links or offline attachments, history and Control Tower KPIs. Configure the four actual titles and cycle starts before tracking their targets. It opens on the training page. See [training usage, source matching and validation](Training_Management_Notes.md).
 
@@ -38,6 +44,10 @@ Version 6.4.1 replaced colour-based interpretations with neutral numbers and exp
 See [review notes and validation](Review_Notes.md) for coverage, calculations and limits. Recorded charges have partial coverage; modelled variances are not payroll spend or product profit.
 
 ## Preview
+
+![Standalone training dashboard](previews/Standalone_Desktop.png)
+
+[Standalone mobile preview](previews/Standalone_Mobile.png)
 
 ![Training on desktop](previews/Training_Desktop.png)
 
