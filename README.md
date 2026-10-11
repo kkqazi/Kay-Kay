@@ -8,7 +8,7 @@ For training, use **[ABC_Training_Survey_Dashboard_v1.html](ABC_Training_Survey_
 
 1. Open the file on GitHub and click **Download raw file**.
 2. Save it with the `.html` extension, then open it in a current Chrome or Edge browser.
-3. Configure the four Group training titles and cycle starts, then use **Save as copy** after changes.
+3. Configure the four Group training titles and cycle starts. Recorded changes autosave in the browser every **30 seconds**; **Save now** is also available. Use **Choose autosave file** in supported browsers to update an HTML file automatically, or **Save as copy** to download a portable copy.
 
 To bring its records into the command centre, use **Export JSON for cockpit**, then **Import training JSON** in **[Cockpit_Cost_PO_Training_v6_6_1.html](Cockpit_Cost_PO_Training_v6_6_1.html)**. Download that companion cockpit the same way; it is approximately 27.7 MB. JSON import replaces only its training snapshot and provides an undo option.
 
@@ -16,7 +16,7 @@ See the **[standalone and JSON-transfer guide](Training_Standalone_Guide.md)** f
 
 ## What changed
 
-Standalone Training v1 separates training and roster management from the cockpit. Companion cockpit v6.6.1 adds a validated JSON snapshot importer/exporter, optional video transfer, import preview and undo, while preserving all prior cockpit datasets. The earlier integrated v6.6 file remains available as a historical review version.
+Standalone Training v1 now includes a 30-second autosave, **Save now**, optional linked HTML-file autosave, accurate save status after reopening, and leave/discard warnings for unsaved copies or unfinished forms. It separates training and roster management from the cockpit. Companion cockpit v6.6.1 adds a validated JSON snapshot importer/exporter, optional video transfer, import preview and undo, while preserving all prior cockpit datasets. The earlier integrated v6.6 file remains available as a historical review version.
 
 Version 6.6 adds **Training & Surveys** under Operations & People, with both supplied April–March rosters, editable employees and courses, four Group training setup slots, three-calendar-month cycles, completion evidence and corrections, surveys, roster training mapping, future availability planning, daily/weekly/financial-period reports, Excel/PDF exports, video links or offline attachments, history and Control Tower KPIs. Configure the four actual titles and cycle starts before tracking their targets. It opens on the training page. See [training usage, source matching and validation](Training_Management_Notes.md).
 
