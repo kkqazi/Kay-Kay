@@ -2,6 +2,10 @@
 
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
+## OpenAI complaints analysis
+
+Use **[Cockpit_Cost_PO_OpenAI_v6_5_1.html](Cockpit_Cost_PO_OpenAI_v6_5_1.html)** for the uploaded v6.5 cockpit with **OpenAI API** replacing Claude in complaints classification and the general AI analyst. Add your own key and password in Settings, enable OpenAI and save settings. The local encrypted key is excluded from saved HTML/JSON. All supplied data and existing classifications are preserved. See the **[OpenAI connection and password guide](OpenAI_Cockpit_Guide.md)**. The independent training dashboard and its companion cockpit below remain separate versions.
+
 ## Download and open
 
 For training, use **[ABC_Training_Survey_Dashboard_v1.html](ABC_Training_Survey_Dashboard_v1.html)** — approximately **1 MB**, with both rosters already included. It runs independently of the cockpit.
