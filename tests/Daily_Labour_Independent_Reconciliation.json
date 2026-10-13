@@ -1,0 +1,13 @@
+{
+  "method": "Independent openpyxl / Python raw-event pairing and window clipping",
+  "window": "12 Oct 2026 19:00 to 13 Oct 2026 18:00 Europe/London",
+  "hoursByINUnit": {
+    "A": 4126.05,
+    "D": 1295.930277777778,
+    "B": 1147.2666666666673,
+    "C": 458.6597222222223,
+    "E": 9.166666666666666,
+    "K": 38.358888888888885
+  },
+  "matchesJavaScriptEngine": true
+}

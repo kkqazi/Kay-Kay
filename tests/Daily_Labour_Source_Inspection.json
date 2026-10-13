@@ -1,0 +1,748 @@
+{
+  "roster": {
+    "id": "roster-initial-13-10-2026",
+    "file": "NEW, USE THIS ONE  of Holiday rota 2026-2027 Unit ABCV1(20261013-203826) (1).xlsx",
+    "bytes": 3097566,
+    "sha256": "92289cb9208209f6e8f284e4c1b55e11885181c7e56f471a3f1a20709c9ae7c4",
+    "loadedAt": "2026-10-13T21:38:07+00:00",
+    "unit": "ABC",
+    "mapping": [
+      {
+        "sheet": "PROD DS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": 6,
+        "shift": 5
+      },
+      {
+        "sheet": "PROD NS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "PACKING DS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "PACKING NS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "PREP DS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": 6,
+        "shift": 5
+      },
+      {
+        "sheet": "PREP NS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "SETTERS DS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "SETTERS NS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "OVEN DS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      },
+      {
+        "sheet": "MANAGERS",
+        "headerRow": 2,
+        "name": 2,
+        "clock": 3,
+        "role": 4,
+        "unit": null,
+        "shift": 5
+      }
+    ],
+    "ignoredSheets": [],
+    "employees": 774
+  },
+  "crown": {
+    "id": "crown-initial-13-10-2026",
+    "file": "Crown131026.xlsx",
+    "bytes": 971333,
+    "sha256": "f214ad892a4b09fd550372110698491db9229be74a5072f08d2e1783c194ff84",
+    "loadedAt": "2026-10-13T21:38:07+00:00",
+    "mapping": [
+      {
+        "sheet": "Master Data",
+        "headerRow": 6,
+        "employee": 2,
+        "time": 6,
+        "direction": "DAYREVIEWINOUTFLAG (0 IN / 1 OUT / −1 unresolved)",
+        "timestamp": "CLOCKINGDATETIMEUNROUNDED"
+      }
+    ],
+    "warnings": [
+      "In / Out is occurrence-derived; DAYREVIEWINOUTFLAG is used instead. −1 is unresolved."
+    ],
+    "errors": [],
+    "captureFrom": 1791828000000,
+    "captureTo": 1791921983000,
+    "events": 3020,
+    "productionDate": "2026-10-13"
+  },
+  "areas": [
+    {
+      "area": "SITE",
+      "status": "ABC only – D/K inactive",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 266,
+      "dlHours": 2404.546388888891,
+      "idlHeads": 44,
+      "idlHours": 401.26666666666677,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 2926.163333333335,
+      "excludedHours": 0,
+      "totalHours": 5731.976388888894,
+      "operatingHours": 2805.813055555558,
+      "prepHours": 97.66666666666666,
+      "prepHeads": 10,
+      "people": 703,
+      "idlPercent": 14.301261656479639
+    },
+    {
+      "area": "ABC",
+      "status": "FLASH – Crown Labour",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 266,
+      "dlHours": 2404.546388888891,
+      "idlHeads": 44,
+      "idlHours": 401.26666666666677,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 2926.163333333335,
+      "excludedHours": 0,
+      "totalHours": 5731.976388888894,
+      "operatingHours": 2805.813055555558,
+      "prepHours": 97.66666666666666,
+      "prepHeads": 10,
+      "people": 703,
+      "idlPercent": 14.301261656479639
+    },
+    {
+      "area": "A",
+      "status": "FLASH – Crown Labour",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 221,
+      "dlHours": 2002.1333333333328,
+      "idlHeads": 28,
+      "idlHours": 254.53333333333333,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 1869.3833333333328,
+      "excludedHours": 0,
+      "totalHours": 4126.05,
+      "operatingHours": 2256.666666666666,
+      "prepHours": 67.16666666666666,
+      "prepHeads": 7,
+      "people": 512,
+      "idlPercent": 11.279172821270313
+    },
+    {
+      "area": "B",
+      "status": "FLASH – Crown Labour",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 38,
+      "dlHours": 341.7833333333333,
+      "idlHeads": 15,
+      "idlHours": 138.1,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 667.3833333333333,
+      "excludedHours": 0,
+      "totalHours": 1147.2666666666673,
+      "operatingHours": 479.8833333333333,
+      "prepHours": 21.333333333333336,
+      "prepHeads": 2,
+      "people": 133,
+      "idlPercent": 28.777827944292017
+    },
+    {
+      "area": "C",
+      "status": "FLASH – Crown Labour",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 7,
+      "dlHours": 60.62972222222221,
+      "idlHeads": 1,
+      "idlHours": 8.633333333333333,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 389.3966666666667,
+      "excludedHours": 0,
+      "totalHours": 458.6597222222223,
+      "operatingHours": 69.26305555555555,
+      "prepHours": 9.166666666666666,
+      "prepHeads": 1,
+      "people": 58,
+      "idlPercent": 12.464557423991465
+    },
+    {
+      "area": "D",
+      "status": "Future – roster required",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 0,
+      "dlHours": 0,
+      "idlHeads": 0,
+      "idlHours": 0,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 1295.930277777778,
+      "excludedHours": 0,
+      "totalHours": 1295.930277777778,
+      "operatingHours": 0,
+      "prepHours": 0,
+      "prepHeads": 0,
+      "people": 552,
+      "idlPercent": null
+    },
+    {
+      "area": "K",
+      "status": "Future – roster required",
+      "units": null,
+      "uplh": null,
+      "dlHeads": 0,
+      "dlHours": 0,
+      "idlHeads": 0,
+      "idlHours": 0,
+      "lcHeads": 0,
+      "lcHours": 0,
+      "reviewHours": 38.358888888888885,
+      "excludedHours": 0,
+      "totalHours": 38.358888888888885,
+      "operatingHours": 0,
+      "prepHours": 0,
+      "prepHeads": 0,
+      "people": 182,
+      "idlPercent": null
+    }
+  ],
+  "coverage": {
+    "files": [
+      {
+        "id": "crown-initial-13-10-2026",
+        "file": "Crown131026.xlsx",
+        "bytes": 971333,
+        "sha256": "f214ad892a4b09fd550372110698491db9229be74a5072f08d2e1783c194ff84",
+        "loadedAt": "2026-10-13T21:38:07+00:00",
+        "mapping": [
+          {
+            "sheet": "Master Data",
+            "headerRow": 6,
+            "employee": 2,
+            "time": 6,
+            "direction": "DAYREVIEWINOUTFLAG (0 IN / 1 OUT / −1 unresolved)",
+            "timestamp": "CLOCKINGDATETIMEUNROUNDED"
+          }
+        ],
+        "warnings": [
+          "In / Out is occurrence-derived; DAYREVIEWINOUTFLAG is used instead. −1 is unresolved."
+        ],
+        "errors": [],
+        "captureFrom": 1791828000000,
+        "captureTo": 1791921983000,
+        "events": 3020,
+        "productionDate": "2026-10-13"
+      }
+    ],
+    "full": true,
+    "events": 3004,
+    "people": 1438,
+    "matched": 436,
+    "cappedHeads": 135,
+    "futureHours": 1343.4558333333337
+  },
+  "exceptionTypes": {
+    "Duplicate clock event removed": 12,
+    "Unresolved Crown direction": 1389,
+    "Crown employee not found in roster": 999,
+    "Crown hours outside DL denominator": 469,
+    "Missing IN": 85,
+    "Unit / area mismatch": 97,
+    "Employee number matched but name differs": 4,
+    "Missing / incomplete clock-out – hours capped at production-day boundary": 135,
+    "Duplicate Clock Number / employee": 3,
+    "New unknown role / REVIEW": 28,
+    "Area mismatch": 13
+  },
+  "rosterAudit": [
+    {
+      "clock": "202796",
+      "type": "Duplicated clock number",
+      "detail": "PROD DS: Line Coordinator / PROD DS: QM"
+    },
+    {
+      "clock": "151862",
+      "type": "Duplicated clock number",
+      "detail": "PROD DS: Cutter/Feeder / PACKING DS: Cutter/Feeder"
+    },
+    {
+      "clock": "804420",
+      "type": "Duplicated clock number",
+      "detail": "PROD NS: QM / PROD NS: Roller/Feeder/Cutter"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Jignasa Naik · PROD DS:4"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Mohammed Khuram Mahmood · PROD DS:9"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Anastasia Chirilesco · PROD DS:12"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Anika Chaudhary · PROD DS:13"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Nzube Anagor · PROD DS:17"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Amelia Lock · PROD DS:18"
+    },
+    {
+      "clock": "773587",
+      "type": "Unknown role",
+      "detail": "Agency · Dinah Akuamoah Boateng"
+    },
+    {
+      "clock": "774859",
+      "type": "Unknown role",
+      "detail": "Agency · Emelia Osei Bonsu"
+    },
+    {
+      "clock": "774981",
+      "type": "Unknown role",
+      "detail": "Agency · Nisha Babu Ravi"
+    },
+    {
+      "clock": "774942",
+      "type": "Unknown role",
+      "detail": "Agency · Abdul Basit Begum"
+    },
+    {
+      "clock": "774969",
+      "type": "Unknown role",
+      "detail": "Agency · Yaxye Hassan"
+    },
+    {
+      "clock": "772347",
+      "type": "Unknown role",
+      "detail": "Agency · Alin Nicolae Dinca"
+    },
+    {
+      "clock": "773868",
+      "type": "Unknown role",
+      "detail": "Agency · Irsh Makhdoom"
+    },
+    {
+      "clock": "772346",
+      "type": "Unknown role",
+      "detail": "Agency · Magdalena Dinca"
+    },
+    {
+      "clock": "772676",
+      "type": "Unknown role",
+      "detail": "Agency · Mariana Cobzariu"
+    },
+    {
+      "clock": "773537",
+      "type": "Unknown role",
+      "detail": "Agency · Petrica Cobzariu"
+    },
+    {
+      "clock": "772345",
+      "type": "Unknown role",
+      "detail": "Agency · Paul Dinca"
+    },
+    {
+      "clock": "774973",
+      "type": "Unknown role",
+      "detail": "Agency · Spiru Dragan"
+    },
+    {
+      "clock": "774630",
+      "type": "Unknown role",
+      "detail": "Agency · Pooja Rani"
+    },
+    {
+      "clock": "774903",
+      "type": "Unknown role",
+      "detail": "Agency · Iuliana Samson"
+    },
+    {
+      "clock": "774881",
+      "type": "Unknown role",
+      "detail": "Agency · Sowmya Gundimeda"
+    },
+    {
+      "clock": "774939",
+      "type": "Unknown role",
+      "detail": "Agency · Ciprian Mihonescu"
+    },
+    {
+      "clock": "774754",
+      "type": "Unknown role",
+      "detail": "Agency · Sheritakibunyo (Sheri)  Buhiregabo"
+    },
+    {
+      "clock": "774952",
+      "type": "Unknown role",
+      "detail": "Agency · Ion-Alex Oprea"
+    },
+    {
+      "clock": "770657",
+      "type": "Unknown role",
+      "detail": "Agency · Mohammed Amin"
+    },
+    {
+      "clock": "774974",
+      "type": "Unknown role",
+      "detail": "Agency · Mariana Dragan"
+    },
+    {
+      "clock": "774950",
+      "type": "Unknown role",
+      "detail": "Agency · MIHAELA-ANGLIA COBZARU"
+    },
+    {
+      "clock": "774749",
+      "type": "Unknown role",
+      "detail": "Agency · Ram Chandra Thapa Magar"
+    },
+    {
+      "clock": "774786",
+      "type": "Unknown role",
+      "detail": "Agency · Komahal Thevarajah"
+    },
+    {
+      "clock": "774733",
+      "type": "Unknown role",
+      "detail": "Agency · Precious Nzogbu"
+    },
+    {
+      "clock": "774714",
+      "type": "Unknown role",
+      "detail": "Agency · Taslima Rahman Tamanna"
+    },
+    {
+      "clock": "774712",
+      "type": "Unknown role",
+      "detail": "Agency · Vincent Mensah"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Lakhman Devshi Goraniya · PROD DS:304"
+    },
+    {
+      "clock": "",
+      "type": "Unknown role",
+      "detail": "Agency · Lakhman Devshi Goraniya"
+    },
+    {
+      "clock": "772761",
+      "type": "Unknown role",
+      "detail": "Agency · Azad Miah"
+    },
+    {
+      "clock": "774976",
+      "type": "Unknown role",
+      "detail": "Agency · Harpreet Kaur"
+    },
+    {
+      "clock": "774768",
+      "type": "Unknown role",
+      "detail": "Agency · Sai Charan Yella"
+    },
+    {
+      "clock": "774785",
+      "type": "Unknown role",
+      "detail": "Agency · Muhammad Faizan"
+    },
+    {
+      "clock": "774933",
+      "type": "Unknown role",
+      "detail": "Agency · Fatima Hassan"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Muhammad Shoaib Abad Ali · PROD NS:11"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Prijin Ninan · PROD NS:12"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Tatjana Kovrigovic · PROD NS:14"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Gabriel Radu · PROD NS:15"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Josephine Wilhelmina · PROD NS:51"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Kingsley Fosu · PROD NS:77"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Sahib Dilthar Singh Khatkar · PACKING DS:19"
+    },
+    {
+      "clock": "152032",
+      "type": "Unknown role",
+      "detail": "Operative-Barcodes · Vilnis Zelcs"
+    },
+    {
+      "clock": "772263",
+      "type": "Unknown role",
+      "detail": "Agency · Ionut Dinca"
+    },
+    {
+      "clock": "773685",
+      "type": "Unknown role",
+      "detail": "Agency · Muhammad Ahmed"
+    },
+    {
+      "clock": "774751",
+      "type": "Unknown role",
+      "detail": "Agency · Godstime Victor"
+    },
+    {
+      "clock": "773271",
+      "type": "Unknown role",
+      "detail": "Agency · Aurelijus Makarovas"
+    },
+    {
+      "clock": "774088",
+      "type": "Unknown role",
+      "detail": "Agency · Rudra Patel"
+    },
+    {
+      "clock": "774737",
+      "type": "Unknown role",
+      "detail": "Agency · Cristian Samson"
+    },
+    {
+      "clock": "774775",
+      "type": "Unknown role",
+      "detail": "Agency · Jay Manish Patel"
+    },
+    {
+      "clock": "774465",
+      "type": "Unknown role",
+      "detail": "Agency · Ugochukwu Umelo"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Rajya Pasupulati · PREP NS:5"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Davinder Singh · SETTERS NS:19"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Michael White · SETTERS NS:21"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Alan Hogan · MANAGERS:3"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Madalin Constanda · MANAGERS:4"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Jevgenija Nenaseva · MANAGERS:5"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Mahesh Champeneriya · MANAGERS:6"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Katarzyna Whiteman · MANAGERS:7"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Kerry Driscoll · MANAGERS:8"
+    },
+    {
+      "clock": "",
+      "type": "Missing / TBC clock number",
+      "detail": "Enea Alikaj · MANAGERS:9"
+    },
+    {
+      "clock": "202796/202796",
+      "type": "Duplicate employee name",
+      "detail": "Nancy Odedara · PROD DS:14 / PROD DS:25"
+    },
+    {
+      "clock": "151734/152896",
+      "type": "Duplicate employee name",
+      "detail": "Andrei Macari · PROD DS:161 / MANAGERS:18"
+    },
+    {
+      "clock": "151862/151862",
+      "type": "Duplicate employee name",
+      "detail": "Victoria Stan · PROD DS:169 / PACKING DS:44"
+    },
+    {
+      "clock": "804420/804420",
+      "type": "Duplicate employee name",
+      "detail": "Sheeza Naveed · PROD NS:34 / PROD NS:140"
+    },
+    {
+      "clock": "804198/TBC",
+      "type": "Duplicate employee name",
+      "detail": "Davinder Singh · PREP NS:36 / SETTERS NS:19"
+    }
+  ],
+  "unknownRoles": [
+    "Agency",
+    "Operative-Barcodes"
+  ],
+  "identities": [
+    {
+      "type": "Employee number matched but name differs",
+      "clock": "774406",
+      "name": "SAHIL SAHIL",
+      "unit": "A",
+      "detail": "Roster: Sahil Q; confirm identity in employee review.",
+      "level": "Review"
+    },
+    {
+      "type": "Duplicate Clock Number / employee",
+      "clock": "804420",
+      "name": "Sheeza Naveed",
+      "unit": "A",
+      "detail": "PROD NS:34 QM / PROD NS:140 Roller/Feeder/Cutter",
+      "level": "Review"
+    },
+    {
+      "type": "Employee number matched but name differs",
+      "clock": "774783",
+      "name": "Ugonna Orji",
+      "unit": "A",
+      "detail": "Roster: Ugonna Juliet; confirm identity in employee review.",
+      "level": "Review"
+    },
+    {
+      "type": "Employee number matched but name differs",
+      "clock": "722244",
+      "name": "Vera Mereacre",
+      "unit": "A",
+      "detail": "Roster: Vera Merearce; confirm identity in employee review.",
+      "level": "Review"
+    },
+    {
+      "type": "Duplicate Clock Number / employee",
+      "clock": "202796",
+      "name": "Nancy Odedara",
+      "unit": "A",
+      "detail": "PROD DS:14 Line Coordinator / PROD DS:25 QM",
+      "level": "Review"
+    },
+    {
+      "type": "Duplicate Clock Number / employee",
+      "clock": "151862",
+      "name": "Victoria Stan",
+      "unit": "C",
+      "detail": "PROD DS:169 Cutter/Feeder / PACKING DS:44 Cutter/Feeder",
+      "level": "Review"
+    },
+    {
+      "type": "Employee number matched but name differs",
+      "clock": "774859",
+      "name": "Brenice  Boons",
+      "unit": "A",
+      "detail": "Roster: Emelia Osei Bonsu; confirm identity in employee review.",
+      "level": "Review"
+    }
+  ]
+}

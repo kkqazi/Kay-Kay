@@ -1,0 +1,71 @@
+{
+  "sha256": "2099d88cabeefafd9b102ea4fa706fe3c5c8c09352ea93fdd3d849e07fc311c5",
+  "originalDataBlocksPreserved": 21,
+  "oldRuntimeStoresAndSettingsIdentical": true,
+  "rosterRows": 774,
+  "crownEvents": 3020,
+  "realBrowserReimportDeduplicated": true,
+  "initialABC": {
+    "area": "ABC",
+    "status": "FLASH – Crown Labour",
+    "units": null,
+    "uplh": null,
+    "dlHeads": 266,
+    "dlHours": 2404.546388888891,
+    "idlHeads": 44,
+    "idlHours": 401.26666666666677,
+    "lcHeads": 0,
+    "lcHours": 0,
+    "reviewHours": 2926.163333333335,
+    "excludedHours": 0,
+    "totalHours": 5731.976388888894,
+    "operatingHours": 2805.813055555558,
+    "prepHours": 97.66666666666666,
+    "prepHeads": 10,
+    "people": 703,
+    "idlPercent": 14.301261656479639
+  },
+  "prepAndOverridesSaved": true,
+  "failedStorageRolledBack": true,
+  "missingDayShowsUnavailable": true,
+  "legacySnapshotResetCompatible": true,
+  "nativeSameFileWrite": {
+    "writes": 1,
+    "downloads": 0
+  },
+  "coldReopen": {
+    "kg": 64500,
+    "override": "DL",
+    "identity": "PROD DS:14",
+    "files": 2,
+    "rosters": 2,
+    "revisionsRetained": true,
+    "complaints": 4283,
+    "po": 172
+  },
+  "routesChecked": [
+    "tower",
+    "weekly",
+    "daily",
+    "uplh",
+    "ops",
+    "people",
+    "she",
+    "po",
+    "quality",
+    "materials",
+    "data",
+    "reports"
+  ],
+  "mobile": {
+    "viewport": 390,
+    "body": 390,
+    "doc": 390
+  },
+  "dailyComplaintLag": {
+    "report": "2026-10-13",
+    "tickets": "2026-10-12",
+    "count": 7
+  },
+  "errors": []
+}
