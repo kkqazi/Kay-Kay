@@ -1,0 +1,12 @@
+/* Run in Sources > Snippets in the ORIGINAL WORKING cockpit tab. */
+(() => {
+  const keys = ['fy27c.she', 'fy27c.sheCfg', 'fy27c.sheManual', 'fy27c.sheRisks', 'fy27c.sheState'];
+  const storage = Object.fromEntries(keys.map(k => [k, localStorage.getItem(k)]));
+  const found = keys.filter(k => storage[k] !== null);
+  const backup = {kind:'cockpit-she-local-backup',version:1,exportedAt:new Date().toISOString(),found,storage};
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+  link.download = 'Cockpit_SHE_Local_Backup.json';
+  document.body.appendChild(link);link.click();link.remove();
+  alert('SHE backup download started. ' + found.length + ' of 5 SHE storage keys were found. Keep the original tab open and upload Cockpit_SHE_Local_Backup.json.');
+})();
