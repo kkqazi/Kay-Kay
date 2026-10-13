@@ -1,0 +1,27 @@
+/* Local workbook extraction only. This does not choose a KPI numerator. */
+'use strict';
+let book,source,summary;
+const canon=v=>String(v??'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const dateNames=['productstart','productiondatetime','productiondate','shiftdate','date','clockingdatetimeunrounded'];
+function rows(name){return XLSX.utils.sheet_to_json(book.Sheets[name],{header:1,raw:true,defval:null,blankrows:true});}
+function guessHeader(grid){let best=0,score=-1;for(let i=0;i<Math.min(grid.length,60);i++){const a=grid[i]||[],keys=a.map(canon),strings=a.filter(v=>typeof v==='string'&&v.trim()).length,points=strings+keys.filter(v=>dateNames.includes(v)).length*30+keys.filter(v=>/^(packsmade|validpacks|goodunits|actualgoodunits|line|sku|unit)$/.test(v)).length*20;if(points>score){best=i;score=points;}}return best;}
+function inspect(name,header){const grid=rows(name),i=header===undefined?guessHeader(grid):header-1,hs=grid[i]||[],sheet=book.Sheets[name],ref=XLSX.utils.decode_range(sheet['!ref']||'A1');
+ const formats=hs.map((_,c)=>{for(let r=i+1;r<Math.min(grid.length,i+25);r++){const cell=sheet[XLSX.utils.encode_cell({r,c})];if(cell?.z)return cell.z;}return '';});
+ let dateColumn=dateNames.map(n=>hs.findIndex(h=>canon(h)===n)).find(c=>c>=0);if(dateColumn===undefined)dateColumn=formats.findIndex(z=>XLSX.SSF.is_date(z));
+ const preview=grid.slice(i+1,i+9),displayPreview=preview.map(row=>hs.map((_,c)=>typeof row[c]==='number'&&XLSX.SSF.is_date(formats[c])?XLSX.SSF.format('dd/mm/yyyy hh:mm:ss',row[c],{date1904:!!book.Workbook?.WBProps?.date1904}):row[c]));
+ return {name,headerRow:i+1,headers:hs,dateColumn:dateColumn>=0?dateColumn:null,formats,range:sheet['!ref']||'',dataRows:Math.max(0,grid.length-i-1),preview,displayPreview,topRows:grid.slice(0,12),grid};
+}
+function calendarDate(v){if(typeof v==='number'){const d=XLSX.SSF.parse_date_code(v,{date1904:!!book.Workbook?.WBProps?.date1904});return d?`${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`:null;}const s=String(v??'').trim();let m=/^(\d{4})[-/](\d\d)[-/](\d\d)/.exec(s);if(m)return `${m[1]}-${m[2]}-${m[3]}`;m=/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})\b/.exec(s);if(m)return `${m[3].length===2?'20'+m[3]:m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return null;}
+async function gzip(text){const stream=new Blob([text]).stream().pipeThrough(new CompressionStream('gzip'));return new Uint8Array(await new Response(stream).arrayBuffer());}
+async function exportSheet(o){const info=inspect(o.sheet,o.headerRow),grid=info.grid,records=[],invalid=[],d=Number(o.dateColumn);if(o.filter&&(!Number.isInteger(d)||d<0||d>=info.headers.length))throw Error('Choose the date/time column, or turn off date filtering.');
+ for(let i=info.headerRow;i<grid.length;i++){const cells=grid[i]||[];if(cells.every(v=>v===null||v===''))continue;const rec={row:i+1,cells},formulas={},errors={};for(let c=0;c<info.headers.length;c++){const cell=book.Sheets[o.sheet][XLSX.utils.encode_cell({r:i,c})];if(cell?.f)formulas[c]=cell.f;if(cell?.t==='e')errors[c]=cell.w||cell.v;}if(Object.keys(formulas).length)rec.formulas=formulas;if(Object.keys(errors).length)rec.errors=errors;if(o.filter){const date=calendarDate(cells[d]);if(!date){invalid.push(rec);continue;}if(date<o.from||date>o.to)continue;}records.push(rec);}
+ // Retain unparseable rows for inspection; never silently hide a source-date issue.
+ const all=[...records,...invalid],parts=[];let batch=[],size=0;
+ const metadata={kind:'greencore-efficiency-source-export',schema:1,source,exportedAt:new Date().toISOString(),date1904:!!book.Workbook?.WBProps?.date1904,workbookSheets:summary,selectedSheet:{name:info.name,headerRow:info.headerRow,headers:info.headers,formats:info.formats,range:info.range},selection:{filtered:!!o.filter,dateColumn:o.filter?d:null,dateField:o.filter?String(info.headers[d]):null,from:o.filter?o.from:null,to:o.filter?o.to:null,datedRows:records.length,unparseableDateRows:invalid.length,totalSelectedRows:all.length},unparseableSourceRows:invalid.map(r=>r.row)};
+ const flush=async()=>{if(!batch.length&&parts.length)return;const json=JSON.stringify({...metadata,part:parts.length+1,rows:batch}),bytes=await gzip(json);parts.push({name:'Efficiency_Phase2_part_'+String(parts.length+1).padStart(2,'0')+'.json.gz',bytes});batch=[];size=0;};
+ for(const r of all){const n=JSON.stringify(r).length;if(size+n>10*1024*1024&&batch.length)await flush();batch.push(r);size+=n;}await flush();return {parts,selectedRows:all.length,datedRows:records.length,invalidDateRows:invalid.length};
+}
+self.onmessage=async e=>{const m=e.data;try{if(m.type==='load'){source=m.source;book=XLSX.read(m.bytes,{type:'array',cellNF:true,cellText:false,cellDates:false,bookVBA:false});summary=book.SheetNames.map(name=>{const x=inspect(name);delete x.grid;return x;});const preferred=summary.find(x=>x.headers.some(h=>canon(h)==='productstart')&&x.headers.some(h=>/packs|goodunits|validunits/.test(canon(h))))||summary.find(x=>x.dateColumn!==null)||summary[0];self.postMessage({type:'loaded',sheets:summary,preferred:preferred.name});}
+ else if(m.type==='inspect'){const x=inspect(m.sheet,m.headerRow);delete x.grid;self.postMessage({type:'inspected',sheet:x});}
+ else if(m.type==='export'){const result=await exportSheet(m);self.postMessage({type:'exported',...result},result.parts.map(p=>p.bytes.buffer));}
+ }catch(err){self.postMessage({type:'error',message:err.message||String(err)});}};

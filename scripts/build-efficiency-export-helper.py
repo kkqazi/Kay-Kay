@@ -1,0 +1,39 @@
+from pathlib import Path
+import re
+r=Path(__file__).resolve().parent.parent
+s=(r/'GC_NH_Cockpit_Daily_Labour_Phase1.html').read_text()
+library=re.search(r'<script id="lib-xlsx">([\s\S]*?)</script>',s)[1]
+worker=(r/'scripts/efficiency-export-worker.js').read_text()
+html='''<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Efficiency data export</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' blob:; worker-src blob:; style-src 'unsafe-inline'; connect-src 'none'">
+<style>body{font:15px system-ui;background:#f5f7f6;color:#16352b;margin:0;padding:24px}main{max-width:1100px;margin:auto}h1{font-size:25px}.card{background:#fff;border:1px solid #d7e3dc;border-radius:12px;padding:20px;margin:16px 0}label{display:flex;flex-direction:column;gap:6px}input,select,button,a.button{font:inherit;padding:10px;border:1px solid #bfd0c6;border-radius:7px}button,a.button{background:#006b3f;color:white;cursor:pointer;text-decoration:none;display:inline-block}button:disabled{opacity:.5;cursor:wait}.controls{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}.controls>label{min-width:150px;max-width:100%;flex:1}.controls input,.controls select{max-width:100%;box-sizing:border-box}.notice{background:#e8f3ee;padding:12px;border-radius:8px;line-height:1.6}.error{background:#ffeded;color:#862626}.scroll{overflow:auto;max-height:340px}table{border-collapse:collapse;min-width:800px;font-size:12px}td,th{border:1px solid #e0e8e3;padding:8px;text-align:left;max-width:240px;overflow-wrap:anywhere}th{background:#eef4f0}.downloads a{margin:8px 8px 8px 0}.muted{color:#52675e;font-size:13px}p{line-height:1.6}[hidden]{display:none!important}@media(max-width:600px){body{padding:10px}.card{padding:14px}.controls>label{min-width:100%}}
+</style></head><body><main><h1>Efficiency data export</h1><p>Create a small source extract for Phase 2. Your workbook is read locally in this browser. This tool exports values and headers; it does not run workbook macros or calculate UPLH.</p>
+<div class="card"><label>1. Choose your Efficiency workbook<input id="file" type="file" accept=".xlsx,.xlsm,.xlsb,.xls"></label><p id="status" class="notice" role="status">Choose the original workbook. It does not need to be under 32 MB.</p></div>
+<section id="setup" class="card" hidden><div class="controls"><label>2. Production-detail worksheet<select id="sheet"></select></label><label>Header row<input id="header" type="number" min="1" step="1"></label></div>
+<p class="muted">Check that the preview shows the original production column headers. Change the worksheet or header row if needed.</p><div id="preview" class="scroll"></div>
+<div class="controls"><label>3. Date/time column<select id="datecolumn"></select></label><label>From<input id="from" type="date" value="2026-10-12"></label><label>To<input id="to" type="date" value="2026-10-13"></label></div>
+<label style="display:block"><input id="filter" type="checkbox" checked> Export the selected calendar dates (includes both overnight-production dates)</label><p class="muted">Use Product Start or the production timestamp if available. If you cannot identify a date column, untick the filter to export all rows. Rows with unparseable dates remain included for review.</p>
+<button id="export">Prepare export</button><div id="downloads" class="downloads"></div></section>
+<p>Download the generated <b>Efficiency_Phase2_part_*.json.gz</b> file(s) and attach them in our conversation. They retain the original column values, source row numbers and workbook field previews.</p></main>
+<script id="xlsx-source" type="text/plain">LIBRARY</script><script id="worker-source" type="text/plain">WORKER</script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id),escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let sheets=[],urls=[],busy=false;
+const workerUrl=URL.createObjectURL(new Blob([$('xlsx-source').textContent,'\\n',$('worker-source').textContent],{type:'application/javascript'})),worker=new Worker(workerUrl);URL.revokeObjectURL(workerUrl);
+function status(text,error=false){$('status').textContent=text;$('status').className='notice'+(error?' error':'');}
+function setBusy(on){busy=on;for(const el of document.querySelectorAll('input,select,button'))el.disabled=on;}
+function clean(){for(const u of urls)URL.revokeObjectURL(u);urls=[];$('downloads').replaceChildren();}
+function render(x){$('header').value=x.headerRow;const dc=$('datecolumn');dc.replaceChildren();x.headers.forEach((h,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+': '+(h||'(blank header)');dc.append(o);});if(x.dateColumn!==null){dc.value=x.dateColumn;$('filter').checked=true;}else $('filter').checked=false;
+ $('preview').innerHTML='<table><thead><tr><th>Source row</th>'+x.headers.map(h=>'<th>'+escape(h)+'</th>').join('')+'</tr></thead><tbody>'+x.displayPreview.map((row,i)=>'<tr><td>'+(x.headerRow+i+1)+'</td>'+x.headers.map((_,j)=>'<td>'+escape(row[j])+'</td>').join('')+'</tr>').join('')+'</tbody></table>';status('Loaded '+x.name+' — '+x.dataRows.toLocaleString('en-GB')+' data rows. Check the worksheet, header and date/time column.');}
+worker.onmessage=e=>{const m=e.data;setBusy(false);if(m.type==='error'){status(m.message,true);return;}if(m.type==='loaded'){sheets=m.sheets;$('sheet').replaceChildren();sheets.forEach(s=>{const o=document.createElement('option');o.value=s.name;o.textContent=s.name+' ('+s.dataRows.toLocaleString('en-GB')+' rows)';$('sheet').append(o);});$('sheet').value=m.preferred;$('setup').hidden=false;render(sheets.find(s=>s.name===m.preferred));}else if(m.type==='inspected')render(m.sheet);else if(m.type==='exported'){clean();let total=0;for(const p of m.parts){total+=p.bytes.byteLength;const url=URL.createObjectURL(new Blob([p.bytes],{type:'application/gzip'}));urls.push(url);const a=document.createElement('a');a.className='button';a.href=url;a.download=p.name;a.textContent='Download '+p.name+' ('+(p.bytes.byteLength/1048576).toFixed(2)+' MB)';$('downloads').append(a);}status('Export ready: '+m.selectedRows.toLocaleString('en-GB')+' rows in '+m.parts.length+' file(s), '+(total/1048576).toFixed(2)+' MB. '+m.invalidDateRows+' rows have unparseable dates and are retained for review. Download every part, then attach the files here.');}};
+worker.onerror=e=>{setBusy(false);status('Workbook reader failed: '+e.message+'. You can instead use Excel to save the production-detail worksheet as CSV.',true);};
+$('file').onchange=async()=>{const f=$('file').files[0];if(!f)return;clean();$('setup').hidden=true;setBusy(true);status('Reading '+f.name+' ('+(f.size/1048576).toFixed(1)+' MB)… Keep this page open.');try{const bytes=await f.arrayBuffer();worker.postMessage({type:'load',bytes,source:{file:f.name,bytes:f.size,lastModified:new Date(f.lastModified).toISOString()}},[bytes]);}catch(e){setBusy(false);status(e.message,true);}};
+$('sheet').onchange=()=>{clean();render(sheets.find(s=>s.name===$('sheet').value));};
+$('header').onchange=()=>{clean();setBusy(true);worker.postMessage({type:'inspect',sheet:$('sheet').value,headerRow:Number($('header').value)});};
+$('export').onclick=()=>{if($('filter').checked&&(!$('from').value||!$('to').value||$('from').value>$('to').value)){status('Choose a valid date range.',true);return;}clean();setBusy(true);status('Preparing the source extract…');worker.postMessage({type:'export',sheet:$('sheet').value,headerRow:Number($('header').value),dateColumn:Number($('datecolumn').value),filter:$('filter').checked,from:$('from').value,to:$('to').value});};
+</script></body></html>'''
+assert '</script' not in worker.lower()
+html=html.replace('LIBRARY',library).replace('WORKER',worker)
+(r/'Efficiency_Local_Export_Helper.html').write_text(html)
+print('Built',len(html.encode()),'bytes')
