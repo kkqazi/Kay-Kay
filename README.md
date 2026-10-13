@@ -2,6 +2,10 @@
 
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
+## Daily complaints report the previous day
+
+Use **[Daily complaint reporting updater](Cockpit_Daily_Complaints_Updater.html)** on your latest saved cockpit. A report dated 13 October now reads complaints dated 12 October, labels both dates and shifts complaint comparisons consistently. It adjusts SQDCP Daily and the Quality Daily brief, preserving the other measures' dates, range reports, data and same-file saving. See the **[daily reporting guide](Daily_Complaints_Reporting_Guide.md)**.
+
 ## Save to one master HTML
 
 Use **[Save to the same file updater](Cockpit_Save_To_Same_File_Updater.html)** to install the adjustment into your **latest saved cockpit** without changing its name. Both top **Save dashboard** and bottom **Save** then update the linked master, asking you to select it once if needed. Normal saves make no downloads; explicit Download copy remains available. See the **[same-file saving guide](Same_File_Saving_Guide.md)**.

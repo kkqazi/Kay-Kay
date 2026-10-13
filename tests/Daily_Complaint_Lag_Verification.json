@@ -1,0 +1,60 @@
+{
+  "blocksPreserved": 21,
+  "complaints": {
+    "report": "2026-10-13",
+    "ticketDate": "2026-10-12",
+    "prior": "2026-10-05",
+    "year": "2025-10-13",
+    "count": 3,
+    "severe": 2
+  },
+  "otherMeasuresRemainOnReportDate": {
+    "cpku": 1,
+    "vol": 90,
+    "uplh": 150,
+    "var": -15,
+    "eff": 130,
+    "dt": 7,
+    "dtDates": [
+      "2026-10-13"
+    ]
+  },
+  "rangeReportsUnshifted": true,
+  "qualityDailyBriefShifted": true,
+  "freshImportAfterCachedIndex": true,
+  "unavailableDayNotZero": true,
+  "qualityLoadFailureLeavesOtherMeasures": true,
+  "boundary": [
+    [
+      "2027-01-01",
+      "2026-12-31",
+      27,
+      14
+    ],
+    [
+      "2028-03-01",
+      "2028-02-29",
+      28,
+      23
+    ],
+    [
+      "2026-10-10",
+      "2026-10-09",
+      27,
+      2
+    ]
+  ],
+  "exportBytes": {
+    "xlsx": 64138,
+    "html": 80541
+  },
+  "coldReopen": {
+    "q": 3,
+    "date": "2026-10-12",
+    "po": 172,
+    "n": 4278
+  },
+  "errors": [],
+  "updaterBytes": 37620,
+  "updaterSha256": "93cdc25c15c0a4ef9f26aac60749e7871af8573c5efed0ab3bcbb720ca34d5b3"
+}
