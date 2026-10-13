@@ -2,6 +2,12 @@
 
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
+## Latest cockpit: Quality review, reports and saving repairs
+
+Use **[GC_NH_Cockpit_Quality_PO_SHE_v6_7.html](GC_NH_Cockpit_Quality_PO_SHE_v6_7.html)** ([ZIP download](GC_NH_Cockpit_Quality_PO_SHE_v6_7.zip)). It updates the supplied 13 October 10:56 cockpit with Quality visuals, daily/weekly/custom reports, chart PNGs, Excel/PDF/PowerPoint and a single team slide. The original 4,271 tickets and 172 POs are preserved. It also fixes loading while the original tab is open, full-copy saving independent of a damaged file, 30-second browser autosave and inclusion of future SHE entries in saved copies. See the **[Quality reporting and recovery guide](Quality_Reporting_Guide.md)**.
+
+**Existing SHE manual entries still require the separate SHE backup from the original working tab.** Import it through the bottom save menu before assuming those figures are recovered. Keep that original tab open until checked.
+
 ## OpenAI complaints analysis
 
 Use **[Cockpit_Cost_PO_OpenAI_v6_5_1.html](Cockpit_Cost_PO_OpenAI_v6_5_1.html)** for the uploaded v6.5 cockpit with **OpenAI API** replacing Claude in complaints classification and the general AI analyst. Add your own key and password in Settings, enable OpenAI and save settings. The local encrypted key is excluded from saved HTML/JSON. All supplied data and existing classifications are preserved. See the **[OpenAI connection and password guide](OpenAI_Cockpit_Guide.md)**. The independent training dashboard and its companion cockpit below remain separate versions.

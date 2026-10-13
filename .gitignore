@@ -1,0 +1,5 @@
+# Build intermediates; the combined v6.7 HTML is the reviewable deliverable.
+GC_NH_Cockpit_PO_SHE_Repaired.html
+scripts/po-she/last-build.json
+__pycache__/
+*.pyc

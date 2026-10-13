@@ -1,0 +1,146 @@
+{
+  "htmlBytes": 28102781,
+  "sha256": "e12ed64deaf0d459f7e00693217b8ece7e8253edcff475d0f94cf6885c49a94e",
+  "OpenAIClientAndVaultUnchanged": true,
+  "unchangedEmbeddedSeeds": [
+    "quality-seed",
+    "materials-seed",
+    "she-seed",
+    "opd-seed-agency",
+    "opd-seed-clocking",
+    "opd-seed-effruns",
+    "opd-seed-misc",
+    "opd-seed-names",
+    "opd-seed-people",
+    "opd-seed-plans",
+    "opd-seed-qlik",
+    "pack",
+    "saved-state",
+    "cost-people-summary",
+    "quality-house-review-pack",
+    "po-seed",
+    "po-lib-jspdf",
+    "po-lib-autotable",
+    "po-lib-pptxgenjs"
+  ],
+  "saving": {
+    "initial": {
+      "db": "gcn-po-she-repaired-v1",
+      "po": 172,
+      "complaints": 4271,
+      "pillars": 6,
+      "kpis": 23,
+      "score": 21.428571428571427,
+      "sheKey": null,
+      "deletes": []
+    },
+    "loadsWithOriginalDBOpen": true,
+    "noDatabaseDeletion": true,
+    "oldDataUntouched": true,
+    "sourceIndependentSave": true,
+    "sheManualSavedAndReopened": true,
+    "savedCopyNormalAndFreshContext": true,
+    "failedSaveVisible": true,
+    "generatedCopyRecoverable": true,
+    "autosave30Seconds": true,
+    "sheBackupImporter": true,
+    "linkedWriterAbort": true,
+    "linkedWriteVerified": true,
+    "browserStorageFailureVisible": true,
+    "errors": []
+  },
+  "quality": {
+    "sourceCounts": {
+      "tickets": 4271,
+      "pos": 172,
+      "pillars": 6,
+      "min": "2025-03-30",
+      "max": "2026-10-11",
+      "charts": 11
+    },
+    "review": {
+      "m": {
+        "total": 58,
+        "severe": 29,
+        "classified": 58,
+        "mapped": 58,
+        "measures": {
+          "foreignBody": 19,
+          "illness": 6,
+          "underfill": 9,
+          "dryStale": 12
+        }
+      },
+      "unit": [
+        [
+          "Unit D",
+          29,
+          8
+        ],
+        [
+          "Unit A",
+          15,
+          9
+        ],
+        [
+          "Unit B",
+          5,
+          3
+        ],
+        [
+          "Unit K",
+          5,
+          5
+        ],
+        [
+          "Unit C",
+          4,
+          4
+        ]
+      ],
+      "sum": 58,
+      "heat": 58
+    },
+    "filteredTickets": 5,
+    "briefs": {
+      "daily": {
+        "prior": "2025-09-26",
+        "priorN": 8,
+        "expected": 8
+      },
+      "week": [
+        "2025-09-27",
+        "2025-10-03"
+      ],
+      "n": 58
+    },
+    "missingDataMarkedUnavailable": true,
+    "trendGapsPreserved": true,
+    "exports": [
+      {
+        "file": "unit.png",
+        "bytes": 21159
+      },
+      {
+        "file": "quality.xlsx",
+        "bytes": 67580
+      },
+      {
+        "file": "quality.pdf",
+        "bytes": 181218
+      },
+      {
+        "file": "quality.pptx",
+        "bytes": 1368812
+      },
+      {
+        "file": "quality-team.pptx",
+        "bytes": 218637
+      }
+    ],
+    "savedHtml": 28189113,
+    "savedFiltersAndSHE": true,
+    "mobileNoOverflow": true,
+    "errors": []
+  }
+}
