@@ -8,7 +8,7 @@ The error shown means Edge could not read the linked file. The previous green sa
 
 This helper runs in the existing cockpit page. It does not open a new dashboard, make network requests, read the damaged file, or overwrite any file. It pauses autosave, detaches the broken file reference and locks the API key. It then reads the dashboard's configured browser stores and captures the code already in the page, including later modules such as SHE.
 
-1. Open [Cockpit_Emergency_Recovery.js](Cockpit_Emergency_Recovery.js) on GitHub in a separate tab. Use **Copy raw file**, or **Download raw file** and open the `.js` in Notepad and copy its entire contents. Do not open this JavaScript file as a dashboard.
+1. Open [Cockpit_Recovery_Copy_Into_Edge.txt](Cockpit_Recovery_Copy_Into_Edge.txt) on GitHub in a separate tab and click **Download raw file**. Open the downloaded `.txt` in **Notepad**, press **Ctrl+A**, then **Ctrl+C** to copy everything. This is the same tested recovery code in a text file; downloading or opening it does not run recovery. If you already downloaded the `.js`, right-click it and choose **Open with → Notepad**. Double-clicking the `.js` launches Windows Script Host, which cannot run this browser-only code; an “Expected …” compilation error there means recovery has not run.
 2. Return to the **original cockpit tab**. Press **F12**.
 3. In Developer Tools, select **Sources → Snippets**. Snippets may be under **»** in the left panel.
 4. Choose **New snippet**, name it `Cockpit Recovery`, and paste the code into its editor. Use the Snippets editor, rather than pasting a command into the Console.
