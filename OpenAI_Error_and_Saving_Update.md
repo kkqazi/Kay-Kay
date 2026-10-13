@@ -32,10 +32,10 @@ No real API call was made during verification. Do not share your key or password
 
 The prior recovery version intentionally downloaded full copies when no file was linked. That made recovery independent of the original 0 KB file, but its **Save** label was unclear. In the updated version:
 
-- The bottom button reads **Download copy** until a file is linked. This downloads another complete HTML.
+- Both the bottom **Save** and top **Save dashboard** now ask for an existing master file on the first Save, then update it. They do not default to downloading a copy.
 - Open the bottom **⋯ → Link master file…**, choose a valid updated HTML in a local folder outside OneDrive, and allow editing in Edge's native permission dialog.
-- The bottom button then reads **Save to file**, and updates that linked master file. Browser autosave remains every **30 seconds** while enabled; changed data also updates a linked, permitted file on that cycle.
-- The top **Save as copy** deliberately continues to download a separate portable HTML. Use it for an independent backup, not a normal update of the linked file.
+- The bottom **Save** updates that linked master file. Browser autosave remains every **30 seconds** while enabled; changed data also updates a linked, permitted file on that cycle.
+- **⋯ → Download copy** deliberately downloads a separate portable HTML when requested.
 
 Before writing, the application reads the current linked file and retains its previous version in browser IndexedDB. It keeps the two most recent prior versions for that dashboard path without starting automatic downloads. **⋯ → Download previous backup** retrieves the latest previous version when requested. If retaining/verifying the backup fails, it stops before opening the file writer. Linked writes still abort on failure and verify the written result before acknowledging success.
 
@@ -47,7 +47,9 @@ The API error update supports the earlier OpenAI cockpit. The single-file label/
 
 The updater was tested with mocked permission, missing-authentication, non-JSON gateway and successful responses. It preserves all 21 inert data blocks, makes no external network call itself, redacts keys, renders server text safely and clears the error on success. A test added 12 synthetic complaints to the baseline 4,271 and verified that all 4,283, PO edits and SHE entries survived a saved-copy cold reopen. Linked saving made no automatic downloads, kept a readable previous-version backup, allowed its download on demand, and stopped before writing when backup storage failed.
 
-The work-browser check currently shows only provisional headers. That leaves the point of authentication loss unresolved. A concise report to give IT is:
+The actual failed POST response was subsequently obtained: the OpenAI project did not have access to `gpt-4.1-mini` (`model_not_found`). This establishes a project model-access problem; the earlier missing-authentication diagnosis was not the cause of that request. Enable the model in the correct project's Limits / Model usage, or select a model already allowed for that project. The user has completed the project-setting change.
+
+For a future actual missing-authentication response, a concise report to give IT is:
 
 > A standalone Edge dashboard sends POST requests to `https://api.openai.com/v1/responses` using an Authorization Bearer header. The preflight returns 200, but the POST returns 403 with `Missing bearer or basic authentication in header`. DevTools only displays provisional request headers. Please check whether browser policy, an extension, a redirect or the HTTPS gateway removes the Authorization header, and whether this approved API connection is permitted. No API key or complaint contents are included in this report.
 

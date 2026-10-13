@@ -2,6 +2,10 @@
 
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
+## Save to one master HTML
+
+Use **[Save to the same file updater](Cockpit_Save_To_Same_File_Updater.html)** to install the adjustment into your **latest saved cockpit** without changing its name. Both top **Save dashboard** and bottom **Save** then update the linked master, asking you to select it once if needed. Normal saves make no downloads; explicit Download copy remains available. See the **[same-file saving guide](Same_File_Saving_Guide.md)**.
+
 ## OpenAI error and single-file saving update
 
 If OpenAI refuses a request or Save keeps creating downloads, use the small **[OpenAI and saving updater](Cockpit_OpenAI_Error_Updater.html)** on your **own latest saved cockpit**. It preserves your new data, exposes the redacted server error and makes linked-file saving clearer, with previous versions stored in the browser instead of automatic backup downloads. See **[step-by-step instructions](OpenAI_Error_and_Saving_Update.md)**. The updater does not fix an OpenAI permission or work-network block by itself.

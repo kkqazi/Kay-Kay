@@ -1,0 +1,16 @@
+{
+  "installerUpdatesSameFile": true,
+  "installerNoDownloads": true,
+  "dataBlocksUnchanged": 21,
+  "patchIdempotent": true,
+  "topAndBottomSaveSameFile": true,
+  "firstSaveSelectsOnce": true,
+  "regularSavesZeroDownloads": true,
+  "autosaveSameFileNoDownload": true,
+  "coldReopenRetainsPOAndSHE": true,
+  "cancelNoWriteOrDownload": true,
+  "explicitDownloadCopy": true,
+  "installerAbortOnFailure": true,
+  "installerBackupFailurePreventsWrite": true,
+  "errors": []
+}
