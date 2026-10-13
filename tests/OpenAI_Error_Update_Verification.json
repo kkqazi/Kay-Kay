@@ -1,0 +1,18 @@
+{
+  "originalBlocksPreserved": 21,
+  "updaterMakesNoNetworkCalls": true,
+  "detailed403AndRequestId": true,
+  "missingAuthenticationExplained": true,
+  "keyRedacted": true,
+  "errorTextSafe": true,
+  "nonJsonGatewayErrorHandled": true,
+  "successClearsError": true,
+  "coldReopenPreserves4283Tickets": true,
+  "poAndSheEditsPreserved": true,
+  "linkedSaveNoDownloads": true,
+  "reconnectPermissionFromSaveButton": true,
+  "browserBackupBytes": 28195906,
+  "backupDownloadOnDemand": true,
+  "backupFailurePreventsWrite": true,
+  "errors": []
+}

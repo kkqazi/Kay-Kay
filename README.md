@@ -2,6 +2,10 @@
 
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
+## OpenAI error and single-file saving update
+
+If OpenAI refuses a request or Save keeps creating downloads, use the small **[OpenAI and saving updater](Cockpit_OpenAI_Error_Updater.html)** on your **own latest saved cockpit**. It preserves your new data, exposes the redacted server error and makes linked-file saving clearer, with previous versions stored in the browser instead of automatic backup downloads. See **[step-by-step instructions](OpenAI_Error_and_Saving_Update.md)**. The updater does not fix an OpenAI permission or work-network block by itself.
+
 ## Latest cockpit: Quality review, reports and saving repairs
 
 Use **[GC_NH_Cockpit_Quality_PO_SHE_v6_7.html](GC_NH_Cockpit_Quality_PO_SHE_v6_7.html)** ([ZIP download](GC_NH_Cockpit_Quality_PO_SHE_v6_7.zip)). It updates the supplied 13 October 10:56 cockpit with Quality visuals, daily/weekly/custom reports, chart PNGs, Excel/PDF/PowerPoint and a single team slide. The original 4,271 tickets and 172 POs are preserved. It also fixes loading while the original tab is open, full-copy saving independent of a damaged file, 30-second browser autosave and inclusion of future SHE entries in saved copies. See the **[Quality reporting and recovery guide](Quality_Reporting_Guide.md)**.
