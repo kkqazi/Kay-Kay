@@ -66,7 +66,7 @@ old="This earlier file does not contain PO management.');}"
 assert source.count(old)==1;source=source.replace(old,"This earlier file does not contain PO management.');}}")
 css=(ROOT/'scripts/daily-labour/module.css').read_text()
 insert='\n<style id="daily-labour-style">'+css+'</style>\n<script id="daily-labour-seed" type="application/json">'+seed_text.replace('<','\\u003c')+'</script>\n'
-for name,id in [('engine','daily-labour-engine'),('module','daily-labour-module')]:
+for name,id in [('engine','daily-labour-engine'),('module-phase1','daily-labour-module')]:
     js=(ROOT/f'scripts/daily-labour/{name}.js').read_text();assert '</script' not in js.lower()
     insert+='<script id="'+id+'">'+js+'</script>\n'
 at=source.rindex('</body>');source=source[:at]+insert+source[at:]

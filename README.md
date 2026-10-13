@@ -92,3 +92,7 @@ See [review notes and validation](Review_Notes.md) for coverage, calculations an
 ![Quality House on desktop](previews/Quality_House_Desktop.png)
 
 [Quality House mobile preview](previews/Quality_House_Mobile.png)
+
+## Daily Labour Phase 2
+
+The standalone `GC_NH_Cockpit_Daily_Labour_Phase2.html` includes the inspected `eff.xlsx` production runs and computes provisional Flash DL UPLH against Crown DL hours. `Cockpit_Daily_Labour_Phase2_InPlace_Updater.html` installs the same module into an already saved Phase 1 cockpit without changing its other source data blocks. See `Daily_Labour_Phase2_Guide.md` for mapping, results, caveats, and use. Rebuild with `python scripts/build-daily-labour-phase2.py --efficiency /path/to/eff.xlsx`, then `python scripts/build-daily-labour-phase2-updater.py`.

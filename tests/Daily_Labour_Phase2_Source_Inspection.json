@@ -1,0 +1,59 @@
+{
+  "source": "eff.xlsx",
+  "sha256": "501bc9bd2d32e0eb127d2992c71a4183978a0bc01cc647158839598ac6063b5d",
+  "sizeBytes": 433153,
+  "sheet": "Sheet1",
+  "headerRow": 1,
+  "dataRows": 386,
+  "selectedDate": "2026-10-13",
+  "windowLocal": {
+    "start": "2026-10-12T19:00:00",
+    "end": "2026-10-13T18:00:00",
+    "zone": "Europe/London"
+  },
+  "selectedRuns": 210,
+  "outputField": "Valid Packs",
+  "unitBasis": "Line Name physical unit",
+  "columns1Based": {
+    "Product Start": 1,
+    "Product End": 2,
+    "Pack Count": 3,
+    "Line Name": 4,
+    "1 Code": 5,
+    "Product Description": 6,
+    "Pack Count Adjustment": 8,
+    "Run ID": 14,
+    "Shift Date": 20,
+    "Packs Made": 44,
+    "Area": 99,
+    "Actual Labour Hours": 102,
+    "Valid Packs": 106,
+    "Actual UPLH": 118
+  },
+  "selectedValidPacksByUnit": {
+    "K": 33550,
+    "A": 141189,
+    "D": 209009,
+    "B": 53625,
+    "C": 11735
+  },
+  "selectedRunCountByUnit": {
+    "K": 31,
+    "A": 91,
+    "D": 54,
+    "B": 25,
+    "C": 9
+  },
+  "selectedABCValidPacks": 206549,
+  "selectedAllValidPacks": 449108,
+  "selectedAreaDifferentFromLine": 141,
+  "selectedAdjustmentMismatches": 0,
+  "wholeFileAreaDifferentFromLine": 265,
+  "wholeFileAdjustmentMismatches": 0,
+  "issues": [
+    "Area values disagree with physical Line Name for 141 selected runs; group by Line Name and retain/flag Area.",
+    "This workbook has no full production-day completeness marker.",
+    "Efficiency Actual Labour Hours and Actual UPLH are not the Crown Flash denominator.",
+    "D/K output is present but a validated roster is unavailable for their UPLH."
+  ]
+}
