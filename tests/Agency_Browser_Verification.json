@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "initial": {
+    "date": "2026-10-13",
+    "people": 184,
+    "hours": 1472,
+    "sourceCount": 67629,
+    "unique": 67311,
+    "sourceRows": 184
+  },
+  "invariant": {
+    "badHours": 0,
+    "badSourceDate": 0,
+    "sanitiser": 34,
+    "anomalous": 1,
+    "header": "2025-09-27T00:00:00"
+  },
+  "checks": [
+    "source dates unchanged",
+    "one eight-hour estimate per person-day",
+    "Sanitiser IDL",
+    "agency and name filters",
+    "CSV scope and provisional label",
+    "mobile overflow",
+    "cold reopen",
+    "no browser errors"
+  ]
+}

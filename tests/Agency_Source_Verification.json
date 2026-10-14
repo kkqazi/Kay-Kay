@@ -1,0 +1,12 @@
+{
+  "sourceHashes": {
+    "J&T allocations.xlsx": "1c24dc9001076c0d54fa492aaf0958a944f67ea24c7fe74dd7b112444189c62e",
+    "Quest Allocations GC WK 29.xlsx": "fc0e7f1fd77324d76a8d05108863a053e45137fd9bfc87ce2f568a7b16c05181"
+  },
+  "allocationRows": 67629,
+  "uniquePersonDays": 67311,
+  "excludedRows": 705,
+  "sourceDatesPreserved": true,
+  "hoursPerPersonDay": 8,
+  "actualHours": false
+}
