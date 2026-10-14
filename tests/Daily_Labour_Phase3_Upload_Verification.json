@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "checks": [
+    "real uploaded workbook parsed in browser",
+    "daily hours preview",
+    "select official report",
+    "same file hash deduplicated"
+  ],
+  "files": 1,
+  "official": 4027.1333333333337,
+  "selected": "official-3e5df23993e830f374534e6fe12b55d2f37735e05ba5c85b0bd09ee4d5794ee2"
+}

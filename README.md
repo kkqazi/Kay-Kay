@@ -1,6 +1,12 @@
 # Labour cockpit and standalone training dashboard
 
-## Latest cockpit: agency estimates in Flash UPLH
+## Latest cockpit: Phase 3 official hours and reconciliation
+
+Use **[GC_NH_Cockpit_Daily_Labour_Phase3.html](GC_NH_Cockpit_Daily_Labour_Phase3.html)**. Labour Report Actual Hours now supply headline DL hours while Crown-only and agency-adjusted Flash remain visible. The Week 03 FY2027 report covers **10–13 October 2026**. On 13 October ABC has **4,027.13 official DL hours**, **2,404.55 Crown-only DL hours**, and **3,202.20 adjusted Flash DL hours**. Crown minus Official is **−1,622.59 hours**. Efficiency-output / official-hours UPLH is **51.29**; workbook UPLH is **55.90** because the workbook output differs.
+
+Use the **[Phase 3 in-place updater](Cockpit_Daily_Labour_Phase3_InPlace_Updater.html)** on your latest saved agency-enabled Phase 2 master. See the **[source mappings, scope limits and guide](Daily_Labour_Phase3_Guide.md)** and **[Phase 3 ZIP](Daily_Labour_Phase3_Delivery.zip)**. Missing dates and mismatched Site scopes are not reconciled as zero; existing sources and user edits are retained.
+
+## Prior cockpit: agency estimates in Flash UPLH
 
 Use **[GC_NH_Cockpit_Daily_Labour_Phase2.html](GC_NH_Cockpit_Daily_Labour_Phase2.html)** and **Operations & People → Daily Labour / UPLH**. J&T and Quest name/location allocations are integrated into this cockpit, using **8 estimated hours per person per printed source date** until the Labour Report arrives. Sanitiser is IDL. Matched agency Crown hours are replaced rather than counted twice. ABC Flash UPLH on 13 October is **64.50**, using **206,549 Valid Packs ÷ 3,202.1964 Flash DL hours**. Unmapped locations remain REVIEW; D/K UPLH awaits full validated labour coverage.
 

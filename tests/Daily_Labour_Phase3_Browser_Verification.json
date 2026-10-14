@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "actual": {
+    "people": 184,
+    "hours": 1472,
+    "dl": 3202.1963888888904,
+    "uplh": 64.50228996469174,
+    "officialDl": 4027.1333333333337,
+    "headline": 51.28933732845531,
+    "crown": 2404.546388888891,
+    "gap": -1622.5869444444425,
+    "prep": 991,
+    "complaints": 4283,
+    "po": 172
+  },
+  "cold": {
+    "people": 184,
+    "uplh": 64.50228996469174,
+    "prep": 991,
+    "files": 2,
+    "officialFiles": 1,
+    "headline": 51.28933732845531
+  },
+  "checks": [
+    "in-place upgrade of latest saved Phase 2",
+    "24 saved data blocks preserved",
+    "user Prep and source datasets retained",
+    "official headline and unchanged Crown/agency Flash",
+    "JSON and Excel exports",
+    "mobile fit",
+    "same-file save without automatic downloads",
+    "cold reopen retains official source and avoids duplicate sources",
+    "native updater backup and write",
+    "no JavaScript errors"
+  ]
+}

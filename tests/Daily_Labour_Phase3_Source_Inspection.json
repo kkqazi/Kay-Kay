@@ -1,0 +1,511 @@
+{
+  "source": {
+    "id": "official-3e5df23993e830f374534e6fe12b55d2f37735e05ba5c85b0bd09ee4d5794ee2",
+    "file": "Week 03 - Labour Report 2027.xlsx",
+    "sha256": "3e5df23993e830f374534e6fe12b55d2f37735e05ba5c85b0bd09ee4d5794ee2",
+    "financialYear": 2027
+  },
+  "reportingTo": "2026-10-13",
+  "weekStart": "2026-10-10",
+  "originalBlocksPreserved": 24,
+  "detailRows": 2265,
+  "days": [
+    {
+      "date": "2026-10-10",
+      "available": true,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": 2620.416666666666,
+          "idlHours": 566.8333333333334,
+          "reportOutput": 137199,
+          "reportUplh": 52.35770392749246,
+          "prepHours": 230.63333333333327,
+          "detailComplete": true
+        },
+        "D": {
+          "area": "D",
+          "dlHours": 2175.783333333334,
+          "idlHours": 412.01666666666654,
+          "reportOutput": 177527,
+          "reportUplh": 81.5922234903904,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": 854.6999999999998,
+          "idlHours": 177.45000000000002,
+          "reportOutput": 22138,
+          "reportUplh": 25.901485901485906,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": 5897.448323471401,
+          "idlHours": 3098.787096774193,
+          "reportOutput": 336864,
+          "reportUplh": 57.120297037501224,
+          "prepHours": null,
+          "agencyAdjustment": 246.54832347140038,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": 1404.7333333333327,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 70.73333333333332,
+          "detailComplete": true
+        },
+        "B": {
+          "area": "B",
+          "dlHours": 1027.3833333333332,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 159.89999999999998,
+          "detailComplete": true
+        },
+        "C": {
+          "area": "C",
+          "dlHours": 188.30000000000004,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 0,
+          "detailComplete": true
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-11",
+      "available": true,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": 3584.7333333333345,
+          "idlHours": 587.1333333333334,
+          "reportOutput": 192549,
+          "reportUplh": 53.713618865187534,
+          "prepHours": 183.16666666666666,
+          "detailComplete": true
+        },
+        "D": {
+          "area": "D",
+          "dlHours": 2675.566666666667,
+          "idlHours": 461.78333333333336,
+          "reportOutput": 234367,
+          "reportUplh": 87.5952757671272,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": 1136.3166666666662,
+          "idlHours": 237.11666666666665,
+          "reportOutput": 35065,
+          "reportUplh": 30.85847548365334,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": 7643.164990138069,
+          "idlHours": 3366.187096774192,
+          "reportOutput": 461981,
+          "reportUplh": 60.44367753359916,
+          "prepHours": null,
+          "agencyAdjustment": 246.54832347140038,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": 2001.4333333333338,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 8,
+          "detailComplete": true
+        },
+        "B": {
+          "area": "B",
+          "dlHours": 1271.3000000000004,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 175.16666666666666,
+          "detailComplete": true
+        },
+        "C": {
+          "area": "C",
+          "dlHours": 312.00000000000006,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 0,
+          "detailComplete": true
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-12",
+      "available": true,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": 3463.783333333334,
+          "idlHours": 557.1666666666666,
+          "reportOutput": 183815,
+          "reportUplh": 53.06769572769658,
+          "prepHours": 250,
+          "detailComplete": true
+        },
+        "D": {
+          "area": "D",
+          "dlHours": 2641.2000000000007,
+          "idlHours": 542.8666666666667,
+          "reportOutput": 225297,
+          "reportUplh": 85.30099954566104,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": 1135.733333333333,
+          "idlHours": 228.38333333333333,
+          "reportOutput": 34060,
+          "reportUplh": 29.98943413946937,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": 7487.264990138069,
+          "idlHours": 3443.970430107526,
+          "reportOutput": 443172,
+          "reportUplh": 59.19010487590979,
+          "prepHours": null,
+          "agencyAdjustment": 246.54832347140038,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": 2008.1500000000003,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 85.01666666666667,
+          "detailComplete": true
+        },
+        "B": {
+          "area": "B",
+          "dlHours": 1191.9833333333338,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 164.98333333333332,
+          "detailComplete": true
+        },
+        "C": {
+          "area": "C",
+          "dlHours": 263.65000000000015,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 0,
+          "detailComplete": true
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-13",
+      "available": true,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": 4027.1333333333337,
+          "idlHours": 620.4833333333333,
+          "reportOutput": 225119,
+          "reportUplh": 55.90055788236462,
+          "prepHours": 258.26666666666665,
+          "detailComplete": true
+        },
+        "D": {
+          "area": "D",
+          "dlHours": 3511.683333333331,
+          "idlHours": 557.7166666666667,
+          "reportOutput": 282424,
+          "reportUplh": 80.42410809630714,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": 1092.6999999999996,
+          "idlHours": 227.08333333333331,
+          "reportOutput": 31548,
+          "reportUplh": 28.87160245264026,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": 8878.064990138066,
+          "idlHours": 3527.4537634408607,
+          "reportOutput": 539091,
+          "reportUplh": 60.721677595155384,
+          "prepHours": null,
+          "agencyAdjustment": 246.54832347140038,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": 2224.4000000000005,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 86.56666666666666,
+          "detailComplete": true
+        },
+        "B": {
+          "area": "B",
+          "dlHours": 1461.8833333333334,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 171.7,
+          "detailComplete": true
+        },
+        "C": {
+          "area": "C",
+          "dlHours": 340.84999999999997,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": 0,
+          "detailComplete": true
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-14",
+      "available": false,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "D": {
+          "area": "D",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "agencyAdjustment": null,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "B": {
+          "area": "B",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "C": {
+          "area": "C",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-15",
+      "available": false,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "D": {
+          "area": "D",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "agencyAdjustment": null,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "B": {
+          "area": "B",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "C": {
+          "area": "C",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        }
+      },
+      "warnings": []
+    },
+    {
+      "date": "2026-10-16",
+      "available": false,
+      "areas": {
+        "ABC": {
+          "area": "ABC",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "D": {
+          "area": "D",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "K": {
+          "area": "K",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "SITE": {
+          "area": "SITE",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "agencyAdjustment": null,
+          "detailComplete": false
+        },
+        "A": {
+          "area": "A",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "B": {
+          "area": "B",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        },
+        "C": {
+          "area": "C",
+          "dlHours": null,
+          "idlHours": null,
+          "reportOutput": null,
+          "reportUplh": null,
+          "prepHours": null,
+          "detailComplete": false
+        }
+      },
+      "warnings": []
+    }
+  ]
+}

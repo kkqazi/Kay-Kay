@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "sourceSHA256": "3e5df23993e830f374534e6fe12b55d2f37735e05ba5c85b0bd09ee4d5794ee2",
+  "checks": {
+    "ABC_DL": 4027.1333333333337,
+    "ABC_IDL": 620.4833333333333,
+    "ABC_ReportOutput": 225119,
+    "ABC_ReportUPLH": 55.90055788236462,
+    "Site_DL": 8878.064990138066,
+    "Site_AgencyAdjustment": 246.54832347140038
+  },
+  "basis": "Independent cached workbook cell reads; input workbook never saved or changed"
+}
