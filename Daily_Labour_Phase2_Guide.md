@@ -1,5 +1,7 @@
 # Daily Labour Phase 2 — Efficiency output and Flash DL UPLH
 
+**Historical Phase 2 baseline:** the latest repository cockpit now includes agency estimates. Follow [Agency Flash in the cockpit](Agency_Flash_Cockpit_Guide.md) for the current denominator and 64.50 provisional ABC UPLH. The 85.90 result below describes the original Crown-only baseline retained in the earlier Phase 2 ZIP.
+
 Open `GC_NH_Cockpit_Daily_Labour_Phase2.html` in Edge to review the supplied 13 October data. Choose **Daily Labour / UPLH**. The 13 October source is already included. Later Efficiency exports can be loaded with **Upload Efficiency**; the dashboard shows a run and unit preview before you select it for the chosen production date. Save the dashboard to the same linked HTML after making changes. **Export module JSON** is for cockpit integration, and **Export Excel** includes the run audit.
 
 If you have edited and saved a Phase 1 cockpit since it was delivered, open `Cockpit_Daily_Labour_Phase2_InPlace_Updater.html` in Edge. Save your current cockpit first, keep it open, and pause auto-save during the update. Choose that saved Phase 1 HTML in the updater. The updater retains its full previous version in the browser, installs Phase 2 into the same file, verifies the write, and offers **Download previous file** if needed. Reopen the updated file after success. It keeps your saved Prep KG, roster changes, classifications, complaints, POs, and other data. It does not download a new cockpit automatically.

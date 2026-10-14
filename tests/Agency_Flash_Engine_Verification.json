@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": 13,
+  "date": "2026-10-13",
+  "agencyPeople": 184,
+  "estimatedHours": 1472,
+  "replacedCrownHours": 1275.1425000000002,
+  "abc": {
+    "output": 206549,
+    "retainedCrownDl": 2362.1963888888904,
+    "agencyDl": 840,
+    "totalDl": 3202.1963888888904,
+    "uplh": 64.50228996469174,
+    "sharedDl": 24
+  }
+}

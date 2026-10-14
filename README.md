@@ -1,8 +1,14 @@
 # Labour cockpit and standalone training dashboard
 
+## Latest cockpit: agency estimates in Flash UPLH
+
+Use **[GC_NH_Cockpit_Daily_Labour_Phase2.html](GC_NH_Cockpit_Daily_Labour_Phase2.html)** and **Operations & People → Daily Labour / UPLH**. J&T and Quest name/location allocations are integrated into this cockpit, using **8 estimated hours per person per printed source date** until the Labour Report arrives. Sanitiser is IDL. Matched agency Crown hours are replaced rather than counted twice. ABC Flash UPLH on 13 October is **64.50**, using **206,549 Valid Packs ÷ 3,202.1964 Flash DL hours**. Unmapped locations remain REVIEW; D/K UPLH awaits full validated labour coverage.
+
+For your own latest saved Phase 2 master, use the **[same-file agency updater](Cockpit_Agency_Flash_InPlace_Updater.html)**. It retains saved data and verifies a full previous-file backup before writing. No standalone agency dashboard is needed. See the **[cockpit agency guide](Agency_Flash_Cockpit_Guide.md)** and **[delivery ZIP](Cockpit_Agency_Flash_Delivery.zip)**. The earlier standalone agency package and pre-agency Phase 2 ZIP remain historical versions.
+
 This repository contains a portable labour/cost/PO cockpit and an independent roster-backed training application. It contains employee and business data; keep the repository private.
 
-## Latest cockpit: Daily Labour / UPLH — Phase 1
+## Prior cockpit: Daily Labour / UPLH — Phase 1
 
 Use **[GC_NH_Cockpit_Daily_Labour_Phase1.html](GC_NH_Cockpit_Daily_Labour_Phase1.html)** ([ZIP with guide](GC_NH_Cockpit_Daily_Labour_Phase1.zip)). Open **Operations & People → Daily Labour / UPLH**. The supplied 13 October Crown export and ABC roster are embedded. The module adds production-window clock hours, DL/IDL/LC/excluded classification, employee and role review, exceptions, roster audit, Prep KG, history and Excel/JSON export. It preserves the latest supplied cockpit's **4,283 complaints and 172 POs**, existing views, settings and data.
 

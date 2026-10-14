@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "actual": {
+    "people": 184,
+    "hours": 1472,
+    "dl": 3202.1963888888904,
+    "uplh": 64.50228996469174,
+    "prep": 991,
+    "complaints": 4283,
+    "po": 172
+  },
+  "cold": {
+    "people": 184,
+    "uplh": 64.50228996469174,
+    "prep": 991,
+    "files": 2
+  },
+  "checks": [
+    "in-place upgrade of latest saved Phase 2",
+    "23 saved data blocks preserved",
+    "user Prep and source datasets retained",
+    "agency Flash calculation",
+    "JSON and Excel exports",
+    "mobile fit",
+    "same-file save without automatic downloads",
+    "cold reopen with no duplicate agency sources",
+    "native updater backup and write",
+    "no JavaScript errors"
+  ]
+}
