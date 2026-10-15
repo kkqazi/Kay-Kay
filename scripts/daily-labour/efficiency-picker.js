@@ -1,9 +1,9 @@
 /* Replaces only the Efficiency upload preview; all changes still use the existing audited store. */
 function efficiencyPicker(){
- const input=h('input',{type:'file',accept:'.xlsx,.xlsm,.xls,.xlsb',id:'dl-upload-efficiency',style:'display:none'});
+ const input=h('input',{type:'file',accept:'.xlsx,.xlsm,.xls,.xlsb,.csv',id:'dl-upload-efficiency',style:'display:none'});
  input.onchange=async()=>{try{
   const file=input.files[0];if(!file)return;const date=data().ui.date;lockControls(true);toast('Inspecting Efficiency run dates…',5000);
-  const bytes=await file.arrayBuffer(),digest=await crypto.subtle.digest('SHA-256',bytes),sha256=[...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join(''),parsed=await parseEfficiencyBytes(bytes,{id:'eff-'+sha256,file:file.name,bytes:file.size,sha256,loadedAt:new Date().toISOString()}),preview=EO.output({efficiencyFiles:[parsed],dayEfficiency:{[date]:[parsed.meta.id]}},date),diagnosis=DailyEfficiencyDiagnostics.inspect(preview,E);
+  const bytes=await file.arrayBuffer(),digest=await crypto.subtle.digest('SHA-256',bytes),sha256=[...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join(''),parsed=await parseEfficiencyBytes(bytes,{id:'eff-'+sha256+(/\.csv$/i.test(file.name)?'-'+date:''),file:file.name,bytes:file.size,sha256,loadedAt:new Date().toISOString(),productionDate:date}),preview=EO.output({efficiencyFiles:[parsed],dayEfficiency:{[date]:[parsed.meta.id]}},date),diagnosis=DailyEfficiencyDiagnostics.inspect(preview,E);
   lockControls(false);
   openDrill({title:'Review Efficiency output for '+showDate(date),crumb:'Daily Labour / Efficiency source',sub:file.name+' · '+parsed.rows.length+' imported rows · '+diagnosis.included+' usable rows for this day',render:body=>{
    body.appendChild(message(diagnosis.message));

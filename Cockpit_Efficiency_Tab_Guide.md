@@ -1,16 +1,17 @@
-# Efficiency-tab output for Crown Flash
+# Efficiency CSV output for Daily Labour
 
-1. Save your current cockpit.
-2. Extract this ZIP and open `Cockpit_Efficiency_Tab_Updater.html` in Chrome or Edge.
-3. Select your latest saved cockpit HTML and download the updated copy.
-4. Open it and go to **Daily Labour / UPLH**. Keep the intended **Production Date** selected.
-5. Click **Upload Efficiency** and choose your current `Efficiency.xlsm` on your PC again.
-6. Check the preview: **Efficiency** worksheet, source dates, selected production date and output field. Click **Use this Efficiency report**, then **Save dashboard**.
+1. Save your latest cockpit, then extract this updater ZIP and open `Cockpit_Efficiency_Tab_Updater.html` in Edge or Chrome.
+2. Select that latest saved cockpit HTML, download the updated copy and open it.
+3. Extract **Efficiency.csv** from the Efficiency ZIP you already have.
+4. In **Daily Labour / UPLH**, select the intended **Production Date**, click **Upload Efficiency** and choose **Efficiency.csv**.
+5. Check **Efficiency CSV**, **Shift Date**, **Valid Packs** and the A/B/C/D/K totals in the preview. Click **Use this Efficiency report**, then **Save dashboard**.
 
-The new reader recognises the **Efficiency** tab's **Shift Date / Line Name / Packs Made** layout. Its printed Shift Date selects the production day; it does not invent run timestamps. Physical Line Name selects A/B/C/D/K. If a Valid Packs column is present, that explicit field is used; otherwise the output is labelled Packs Made throughout the Flash cards and exports. It does not silently relabel Packs Made as Valid Packs.
+This correction has been checked against the actual supplied CSV. It reads UK dates and Excel serial dates as printed, without the spreadsheet library converting them to US dates. The printed **Shift Date** identifies the production day; the CSV's Product Start/End fields do not contain the run times needed for an overnight timestamp calculation.
 
-An old Detail sheet is not substituted when an Efficiency tab is present. Timed-run exports remain supported with their original Product Start / Product End / Valid Packs rules. They retain boundary-run and duplicate checks. Selected files with conflicting output definitions cannot produce UPLH.
+Only the selected day's output rows are stored for each CSV import. To connect another production date, select that date and upload the same CSV again. Previous day selections remain available. The CSV can be larger than 32 MB because it is read locally in a worker; blank formula-export rows are ignored. Source file checksum, date selection, field definitions and original source row numbers are retained for audit and export.
 
-The preview shows source worksheet, date coverage and output field. A report without usable rows for the selected day cannot replace the existing source. Existing mismatched imports are retained for audit and now show the reason for their blank output. **Download workbook inspection** produces a small local diagnostic file if a layout needs further review.
+**Valid Packs** is used when present. Otherwise an explicit **Packs Made** field is used and labelled accordingly. Physical **Line Name** supplies A/B/C/D/K. Adjustment and duplicate checks remain active. Output from all five units appears in the preview; the Site productivity card retains its existing validated-roster scope. Efficiency labour hours do not replace Crown or agency hours.
 
-The full workbook is read locally, including workbooks larger than the chat transfer limit. No workbook macros execute and nothing is uploaded by this updater. Existing Crown hours, roster, agency estimates, saved corrections, historical days, complaints, rates, commentary and financial records remain intact. Historical output is not re-dated. Current output appears after re-uploading the workbook through the corrected reader; the updater cannot recreate current production from an old saved extract.
+The original XLSM remains supported where its worksheet headings can be read, but its full internal layout was not available for verification. Use the supplied CSV for the verified path in this update. A rejected import does not replace the previous source.
+
+Everything runs locally. The updater contains code only and does not upload business data. Saved roster, Crown and agency sources, finance, complaints, product amendments, prior days and other dashboard modules are retained. The original HTML remains available.

@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Efficiency tab updater</title><style>body{font:16px/1.6 system-ui,sans-serif;background:#f3f5f3;color:#17211c;margin:0;padding:24px}main{max-width:760px;margin:auto;background:white;border:1px solid #d8dfd9;border-radius:10px;padding:28px}h1{font-size:25px;margin-top:0}label{font-weight:650;display:block}input{font:inherit;max-width:100%}#status{background:#f3f5f3;padding:14px}a{display:inline-block;background:#17211c;color:white;padding:12px 16px;border-radius:7px;text-decoration:none}a[hidden]{display:none}.note{font-size:14px;color:#55615a}@media(max-width:600px){body{padding:12px}main{padding:18px}}</style></head><body><main><h1>Read output from the Efficiency tab</h1><p>Connect the Efficiency worksheet's production dates and packs to Daily Labour / UPLH.</p><ol><li>Save your current cockpit.</li><li>Select that latest saved HTML below.</li><li>Download and open the updated cockpit.</li><li>In Daily Labour, select the Production Date and upload your current Efficiency workbook again.</li></ol><label for="source">Choose your saved cockpit HTML</label><input id="source" type="file" accept=".html,.htm"><p id="status" role="status" aria-live="polite">No file selected.</p><a id="download" hidden>Download updated cockpit</a><p class="note">The new preview shows the worksheet, source dates and output field. Old records remain available for audit.</p><p class="note">Everything runs on your PC. Nothing is uploaded. Saved records, previous amendments and the original file are retained.</p></main><script id="diagnostics" type="text/plain">/* Read-only Efficiency source diagnostics. Production totals and clock hours stay unchanged. */
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Efficiency tab updater</title><style>body{font:16px/1.6 system-ui,sans-serif;background:#f3f5f3;color:#17211c;margin:0;padding:24px}main{max-width:760px;margin:auto;background:white;border:1px solid #d8dfd9;border-radius:10px;padding:28px}h1{font-size:25px;margin-top:0}label{font-weight:650;display:block}input{font:inherit;max-width:100%}#status{background:#f3f5f3;padding:14px}a{display:inline-block;background:#17211c;color:white;padding:12px 16px;border-radius:7px;text-decoration:none}a[hidden]{display:none}.note{font-size:14px;color:#55615a}@media(max-width:600px){body{padding:12px}main{padding:18px}}</style></head><body><main><h1>Read output from the Efficiency tab</h1><p>Read Efficiency CSV output using its printed Shift Date and Valid Packs.</p><ol><li>Save your current cockpit.</li><li>Select that latest saved HTML below.</li><li>Download and open the updated cockpit.</li><li>Extract Efficiency.csv from your ZIP. In Daily Labour, select the Production Date and use Upload Efficiency to choose that CSV.</li></ol><label for="source">Choose your saved cockpit HTML</label><input id="source" type="file" accept=".html,.htm"><p id="status" role="status" aria-live="polite">No file selected.</p><a id="download" hidden>Download updated cockpit</a><p class="note">The new preview shows the worksheet, source dates and output field. Old records remain available for audit.</p><p class="note">Everything runs on your PC. Nothing is uploaded. Saved records, previous amendments and the original file are retained.</p></main><script id="diagnostics" type="text/plain">/* Read-only Efficiency source diagnostics. Production totals and clock hours stay unchanged. */
 (function(root){
 'use strict';
 function inspect(output,engine){
@@ -22,10 +22,10 @@ const api={inspect,inspectSheets};root.DailyEfficiencyDiagnostics=api;if(typeof 
 })(typeof window==='undefined'?globalThis:window);
 </script><script id="picker" type="text/plain">/* Replaces only the Efficiency upload preview; all changes still use the existing audited store. */
 function efficiencyPicker(){
- const input=h('input',{type:'file',accept:'.xlsx,.xlsm,.xls,.xlsb',id:'dl-upload-efficiency',style:'display:none'});
+ const input=h('input',{type:'file',accept:'.xlsx,.xlsm,.xls,.xlsb,.csv',id:'dl-upload-efficiency',style:'display:none'});
  input.onchange=async()=>{try{
   const file=input.files[0];if(!file)return;const date=data().ui.date;lockControls(true);toast('Inspecting Efficiency run dates…',5000);
-  const bytes=await file.arrayBuffer(),digest=await crypto.subtle.digest('SHA-256',bytes),sha256=[...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join(''),parsed=await parseEfficiencyBytes(bytes,{id:'eff-'+sha256,file:file.name,bytes:file.size,sha256,loadedAt:new Date().toISOString()}),preview=EO.output({efficiencyFiles:[parsed],dayEfficiency:{[date]:[parsed.meta.id]}},date),diagnosis=DailyEfficiencyDiagnostics.inspect(preview,E);
+  const bytes=await file.arrayBuffer(),digest=await crypto.subtle.digest('SHA-256',bytes),sha256=[...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join(''),parsed=await parseEfficiencyBytes(bytes,{id:'eff-'+sha256+(/\.csv$/i.test(file.name)?'-'+date:''),file:file.name,bytes:file.size,sha256,loadedAt:new Date().toISOString(),productionDate:date}),preview=EO.output({efficiencyFiles:[parsed],dayEfficiency:{[date]:[parsed.meta.id]}},date),diagnosis=DailyEfficiencyDiagnostics.inspect(preview,E);
   lockControls(false);
   openDrill({title:'Review Efficiency output for '+showDate(date),crumb:'Daily Labour / Efficiency source',sub:file.name+' · '+parsed.rows.length+' imported rows · '+diagnosis.included+' usable rows for this day',render:body=>{
    body.appendChild(message(diagnosis.message));
@@ -48,6 +48,7 @@ const OUTPUT='Valid Packs',num=v=>v!==null&&v!==undefined&&String(v).trim()!==''
 const unitFromLine=line=>/^Unit\s+([ABCDK])\b/i.exec(String(line??'').trim())?.[1].toUpperCase()||'Unknown';
 function date(value,date1904){return E.timestamp(typeof value==='number'&&date1904?value+1462:value);}
 function productionDate(value,date1904){
+ if(typeof value==='string'&&/^\d+(?:\.\d+)?$/.test(value.trim())&&+value>=1&&+value<=2958465)value=+value;
  let d;if(typeof value==='number'&&Number.isFinite(value)){d=new Date(Date.UTC(1899,11,30)+Math.floor(value+(date1904?1462:0))*864e5).toISOString().slice(0,10);}
  else if(value instanceof Date)d=value.toISOString().slice(0,10);
  else{const text=String(value??'').trim(),iso=/^(\d{4})-(\d\d)-(\d\d)(?:$|[ T])/.exec(text),uk=/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})(?:$|[ T])/.exec(text);if(iso)d=iso[1]+'-'+iso[2]+'-'+iso[3];else if(uk)d=(uk[3].length===2?'20'+uk[3]:uk[3])+'-'+uk[2].padStart(2,'0')+'-'+uk[1].padStart(2,'0');}
@@ -63,7 +64,7 @@ function parseShiftSheet(sheet,H,meta){
  const rows=[],errors=[],dates=new Set(),index=name=>H.keys.indexOf(E.header(name)),ix=Object.fromEntries(['Run ID','Area','1 Code','Product Description','Packs Made','Pack Count Adjustment','Pack Count','Days Nights'].map(n=>[n,index(n)]));
  for(let i=H.at+1;i<sheet.grid.length;i++){const values=sheet.grid[i]||[],line=String(values[H.line]??'').trim();if(!line||/^(?:grand\s*)?total\b/i.test(line)||E.header(line)==='linename')continue;const get=n=>ix[n]>=0?values[ix[n]]:null,pd=productionDate(values[H.shift],sheet.date1904),unit=unitFromLine(line),units=num(values[H.output]),packsMade=num(get('Packs Made')),adjustment=num(get('Pack Count Adjustment')),sourceArea=String(get('Area')??'').trim().toUpperCase(),issues=[];
   if(!pd)issues.push('Missing / invalid Shift Date');if(units===null||units<0)issues.push('Missing / invalid '+H.outputField);if(unit==='Unknown')issues.push('Unmapped production line unit');if(pd)dates.add(pd);
-  const sourceRunId=String(get('Run ID')??'').trim(),runId=sourceRunId||'shift:'+sheet.name+':'+(i+1),row={runId,sourceRunId,identityBasis:sourceRunId?'Run ID':'worksheet and source row',productionDate:pd,dateBasis:'Shift Date',outputField:H.outputField,start:null,end:null,startWall:pd||String(values[H.shift]??''),endWall:'',unit,line,sourceArea,sku:String(get('1 Code')??''),description:String(get('Product Description')??''),units,packsMade,adjustment,packCount:num(get('Pack Count')),shift:String(get('Days Nights')??''),efficiencyLabourHours:null,sourceUplh:null,areaMismatch:!!sourceArea&&sourceArea!==unit,arithmeticMismatch:H.outputField==='Valid Packs'&&packsMade!==null&&adjustment!==null&&units!==null&&Math.abs(packsMade+adjustment-units)>1e-8,issues,sheet:sheet.name,row:i+1};rows.push(row);if(issues.length)errors.push({sheet:sheet.name,row:i+1,runId,issues});
+  const sourceRunId=String(get('Run ID')??'').trim(),sourceRow=sheet.sourceRows?.[i]??i+1,runId=sourceRunId||'shift:'+sheet.name+':'+sourceRow,row={runId,sourceRunId,identityBasis:sourceRunId?'Run ID':'worksheet and source row',productionDate:pd,dateBasis:'Shift Date',outputField:H.outputField,start:null,end:null,startWall:pd||String(values[H.shift]??''),endWall:'',unit,line,sourceArea,sku:String(get('1 Code')??''),description:String(get('Product Description')??''),units,packsMade,adjustment,packCount:num(get('Pack Count')),shift:String(get('Days Nights')??''),efficiencyLabourHours:null,sourceUplh:null,areaMismatch:!!sourceArea&&sourceArea!==unit,arithmeticMismatch:H.outputField==='Valid Packs'&&packsMade!==null&&adjustment!==null&&units!==null&&Math.abs(packsMade+adjustment-units)>1e-8,issues,sheet:sheet.name,row:sourceRow};rows.push(row);if(issues.length)errors.push({sheet:sheet.name,row:sourceRow,runId,issues});
  }
  if(!rows.length)throw Error('The Efficiency tab contains no output rows. Check Shift Date, Line Name and '+H.outputField+'.');const ordered=[...dates].sort();
  return{rows,meta:{...meta,outputField:H.outputField,dateBasis:'Shift Date',unitBasis:'Line Name (physical production unit)',timeBasis:'Printed production Shift Date; no run timestamps inferred',rowCount:rows.length,mapping:[{sheet:sheet.name,headerRow:H.at+1,columns:{'Line Name':H.line+1,'Shift Date':H.shift+1,[H.outputField]:H.output+1},headers:H.headers,outputField:H.outputField,date1904:!!sheet.date1904}],ignoredSheets:[],errors,observedFrom:null,observedTo:null,observedFirstDate:ordered[0]||null,observedLastDate:ordered.at(-1)||null,completeness:'Reported output rows; full-day completeness is not inferred'}};
@@ -90,6 +91,35 @@ function parse(sheets,meta={}){
  if(!rows.length)throw Error('No production-run rows found. Required headers: Product Start, Product End, Line Name, Run ID, Valid Packs.');
  const times=rows.flatMap(r=>[r.start,r.end]).filter(Number.isFinite);
  return {rows,meta:{...meta,outputField:OUTPUT,unitBasis:'Line Name (physical production unit)',timeBasis:'Product Start / Product End, Europe/London',rowCount:rows.length,mapping,ignoredSheets,errors,observedFrom:times.length?Math.min(...times):null,observedTo:times.length?Math.max(...times):null,completeness:'Imported run rows; full export completeness not inferred from first/last run'}};
+}
+// CSV is read as text: Excel/US date auto-conversion must not change UK Shift Dates.
+function* csvRecords(text){
+ text=String(text).replace(/^\uFEFF/,'');let fields=[],value='',quoted=false,record=1;
+ const first=text.slice(0,text.search(/[\r\n]/)<0?text.length:text.search(/[\r\n]/)),separator=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',';
+ for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'){if(text[i+1]==='"'){value+='"';i++;}else quoted=false;}else value+=c;}
+  else if(c==='"'&&value==='')quoted=true;
+  else if(c===separator){fields.push(value);value='';}
+  else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;fields.push(value);yield{row:record++,values:fields};fields=[];value='';}
+  else value+=c;
+ }
+ if(quoted)throw Error('The CSV ends inside a quoted field. Export a complete CSV UTF-8 copy.');
+ if(value!==''||fields.length){fields.push(value);yield{row:record,values:fields};}
+}
+function parseCSV(text,meta={}){
+ const sheet={name:'Efficiency CSV',grid:[],sourceRows:[]};let H=null,sourceRows=0,outputRows=0,matchedRows=0,blankRows=0,first=null,last=null;
+ const selected=meta.productionDate||null;if(selected)E.windowFor(selected);
+ for(const record of csvRecords(text)){
+  const values=record.values;if(!H){sheet.grid.push(values);sheet.sourceRows.push(record.row);H=efficiencyHeader(sheet);if(!H&&sheet.grid.length>=60)throw Error('CSV headings not recognised. Export the Efficiency tab with Shift Date, Line Name and Valid Packs / Packs Made.');continue;}
+  sourceRows++;const line=String(values[H.line]??'').trim();if(!line||/^(?:grand\s*)?total\b/i.test(line)){blankRows++;continue;}
+  const pd=productionDate(values[H.shift],false);if(E.header(line)==='linename')continue;outputRows++;if(pd){if(!first||pd<first)first=pd;if(!last||pd>last)last=pd;}
+  // Keep original row numbers and only the selected day's rows, plus undated rows for review.
+  if(selected&&pd&&pd!==selected)continue;matchedRows++;sheet.grid.push(values);sheet.sourceRows.push(record.row);
+ }
+ if(!H)throw Error('CSV headings not recognised. Export the Efficiency tab with Shift Date, Line Name and Valid Packs / Packs Made.');
+ if(!matchedRows)throw Error('No Efficiency CSV output rows match production date '+(selected||'(not selected)')+'. Source dates: '+(first||'unknown')+' to '+(last||'unknown')+'. The previous report has been retained.');
+ const parsed=parseShiftSheet(sheet,H,meta);parsed.meta.sourceType='CSV UTF-8';parsed.meta.sourceSelection=selected?{productionDate:selected,rule:'Printed Shift Date',sourceOutputRows:outputRows,selectedRows:matchedRows}:null;parsed.meta.sourceDataRows=sourceRows;parsed.meta.skippedBlankOrTotalRows=blankRows;parsed.meta.observedFirstDate=first;parsed.meta.observedLastDate=last;
+ parsed.meta.sheetInspection=[{name:sheet.name,headerRow:sheet.sourceRows[H.at],headers:H.headers,worksheetRows:sourceRows+H.at+1,topRows:sheet.grid.slice(0,H.at+1),preview:sheet.grid.slice(H.at+1,H.at+7),previewOnly:true,date1904:false}];
+ return parsed;
 }
 function output(model,dateString){
  const W=E.windowFor(dateString),ids=model.dayEfficiency?.[dateString]||[],files=(model.efficiencyFiles||[]).filter(f=>ids.includes(f.meta.id)),rows=[],exceptions=[],groups=new Map(),blocked=new Set(),bounds=[];
@@ -121,12 +151,27 @@ function apply(model,labour){
  }
  labour.efficiency=eff;labour.exceptions.push(...eff.exceptions);return labour;
 }
-const api={parse,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
+const api={parse,parseCSV,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
 })(typeof window==='undefined'?globalThis:window);
+</script><script id="reader" type="text/plain">/* The worker reads CSV as text, retaining UK dates and original source row numbers. */
+async function parseEfficiencyBytes(bytes,meta){
+ const csv=/\.csv$/i.test(meta.file||'');
+ function parseOnMain(){
+  if(csv)return EO.parseCSV(new TextDecoder('utf-8').decode(bytes),meta);
+  const sheets=sourceGrid(XLSX.read(bytes,{type:'array',cellDates:false})),file=EO.parse(sheets,meta);file.meta.sheetInspection=DailyEfficiencyDiagnostics.inspectSheets(sheets);return file;
+ }
+ if(typeof Worker==='undefined')return parseOnMain();
+ const scripts=['lib-xlsx','daily-labour-engine','daily-efficiency-engine','daily-efficiency-diagnostics'].map(id=>document.getElementById(id)?.textContent);
+ if(scripts.some(x=>!x))throw Error('The cockpit is missing its offline Efficiency or workbook parser.');
+ const workerCode=scripts.join('\n;\n')+`\nself.onmessage=e=>{try{let file;if(/\\.csv$/i.test(e.data.meta.file||'')){file=DailyEfficiencyEngine.parseCSV(new TextDecoder('utf-8').decode(e.data.bytes),e.data.meta);}else{const wb=XLSX.read(e.data.bytes,{type:'array',cellDates:false});const sheets=wb.SheetNames.map(name=>({name,date1904:!!wb.Workbook?.WBProps?.date1904,grid:XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,raw:true,defval:null,blankrows:true})}));file=DailyEfficiencyEngine.parse(sheets,e.data.meta);file.meta.sheetInspection=DailyEfficiencyDiagnostics.inspectSheets(sheets);}self.postMessage({file});}catch(error){self.postMessage({error:error.message||String(error)});}};`;
+ const url=URL.createObjectURL(new Blob([workerCode],{type:'text/javascript'}));let worker;
+ try{try{worker=new Worker(url);}catch(_){return parseOnMain();}return await new Promise((resolve,reject)=>{worker.onmessage=e=>e.data.error?reject(Error(e.data.error)):resolve(e.data.file);worker.onerror=e=>reject(Error(e.message||'Efficiency workbook worker failed'));worker.postMessage({bytes,meta},[bytes]);});}
+ finally{worker?.terminate();URL.revokeObjectURL(url);}
+}
 </script><script>/* Code-only patch; no saved business records are embedded or rewritten. */
 (function(root){
 'use strict';
-function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine){
+function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine,sourceReader){
  const rx=/<script\b[^>]*\bid=["']daily-labour-module["'][^>]*>([\s\S]*?)<\/script\s*>/gi,matches=[...source.matchAll(rx)];if(matches.length!==1)throw Error('Choose a saved cockpit with one Daily Labour module. Your file has not been changed.');
  let code=matches[0][1];const marker='/* Efficiency source-date checks v1 */';
  const once=(a,b)=>{if(code.split(a).length!==2)throw Error('This Daily Labour version needs a different updater. Your file has not been changed.');code=code.replace(a,()=>b);};
@@ -158,6 +203,13 @@ function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine){
   const oldSource=/sources\.appendChild\(message\('Efficiency: [^\n]*?'\)\);/g;if([...code.matchAll(oldSource)].length===1)code=code.replace(oldSource,()=>"sources.appendChild(message('Efficiency tab: printed Shift Date supplies the production date. Valid Packs is used when present; otherwise the explicitly labelled Packs Made column is used. Line Name supplies the physical unit. Timed-run exports retain Product Start / End and Valid Packs. Output, date basis and source rows are retained; Efficiency labour hours never replace Crown hours.'));");
   code='/* Efficiency output labels v1 */\n'+code;
  }
+ // Replace these functions on every update, including cockpits already patched by v1.
+ const pickStart=code.indexOf('function efficiencyPicker(){'),pickEnd=code.indexOf('function previewRoster(',pickStart);
+ if(pickStart<0||pickEnd<0)throw Error('Efficiency upload preview not found.');
+ code=code.slice(0,pickStart)+picker.slice(picker.indexOf('function efficiencyPicker(){')).trim()+'\n'+code.slice(pickEnd);
+ const readStart=code.indexOf('async function parseEfficiencyBytes('),readEnd=code.indexOf('\nfunction agencyPicker(',readStart);
+ if(readStart<0||readEnd<0||typeof sourceReader!=='string'||!sourceReader.includes('async function parseEfficiencyBytes('))throw Error('The Efficiency source reader is missing.');
+ code=code.slice(0,readStart)+sourceReader.slice(sourceReader.indexOf('async function parseEfficiencyBytes(')).trim()+code.slice(readEnd);
  if(typeof efficiencyEngine!=='string'||!efficiencyEngine.includes('function parseShiftSheet('))throw Error('The updated Efficiency reader is missing.');
  const engineRx=/<script\b[^>]*\bid=["']daily-efficiency-engine["'][^>]*>[\s\S]*?<\/script\s*>/gi;if([...source.matchAll(engineRx)].length!==1)throw Error('One existing Efficiency engine is required.');
  source=source.replace(engineRx,()=>'<scr'+'ipt id="daily-efficiency-engine">'+efficiencyEngine+'</scr'+'ipt>');
@@ -169,6 +221,6 @@ function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine){
 root.patchEfficiencyDates=patchEfficiencyDates;if(typeof module!=='undefined'&&module.exports)module.exports=patchEfficiencyDates;
 })(typeof window==='undefined'?globalThis:window);
 </script><script>(function(){'use strict';const input=document.getElementById('source'),status=document.getElementById('status'),download=document.getElementById('download');let url,request=0;
-input.onchange=async()=>{const current=++request;download.hidden=true;try{const file=input.files[0];if(!file)return;status.textContent='Checking your saved cockpit…';const source=await file.text();if(current!==request)return;const code=id=>document.getElementById(id).textContent,result=patchEfficiencyDates(source,code('diagnostics'),code('picker'),code('engine'));
-if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(new Blob([result],{type:'text/html'}));download.href=url;download.download=file.name.replace(/\.html?$/i,'')+'_Efficiency_Tab.html';download.hidden=false;status.textContent='Ready. Open the updated cockpit, then upload Efficiency.xlsm again so it reads the Efficiency tab.';
+input.onchange=async()=>{const current=++request;download.hidden=true;try{const file=input.files[0];if(!file)return;status.textContent='Checking your saved cockpit…';const source=await file.text();if(current!==request)return;const code=id=>document.getElementById(id).textContent,result=patchEfficiencyDates(source,code('diagnostics'),code('picker'),code('engine'),code('reader'));
+if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(new Blob([result],{type:'text/html'}));download.href=url;download.download=file.name.replace(/\.html?$/i,'')+'_Efficiency_CSV.html';download.hidden=false;status.textContent='Ready. Open the updated cockpit, then upload the extracted Efficiency.csv for the chosen production date.';
 }catch(error){if(current===request)status.textContent=error.message;}};})();</script></body></html>

@@ -1,7 +1,7 @@
 /* Code-only patch; no saved business records are embedded or rewritten. */
 (function(root){
 'use strict';
-function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine){
+function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine,sourceReader){
  const rx=/<script\b[^>]*\bid=["']daily-labour-module["'][^>]*>([\s\S]*?)<\/script\s*>/gi,matches=[...source.matchAll(rx)];if(matches.length!==1)throw Error('Choose a saved cockpit with one Daily Labour module. Your file has not been changed.');
  let code=matches[0][1];const marker='/* Efficiency source-date checks v1 */';
  const once=(a,b)=>{if(code.split(a).length!==2)throw Error('This Daily Labour version needs a different updater. Your file has not been changed.');code=code.replace(a,()=>b);};
@@ -33,6 +33,13 @@ function patchEfficiencyDates(source,diagnostics,picker,efficiencyEngine){
   const oldSource=/sources\.appendChild\(message\('Efficiency: [^\n]*?'\)\);/g;if([...code.matchAll(oldSource)].length===1)code=code.replace(oldSource,()=>"sources.appendChild(message('Efficiency tab: printed Shift Date supplies the production date. Valid Packs is used when present; otherwise the explicitly labelled Packs Made column is used. Line Name supplies the physical unit. Timed-run exports retain Product Start / End and Valid Packs. Output, date basis and source rows are retained; Efficiency labour hours never replace Crown hours.'));");
   code='/* Efficiency output labels v1 */\n'+code;
  }
+ // Replace these functions on every update, including cockpits already patched by v1.
+ const pickStart=code.indexOf('function efficiencyPicker(){'),pickEnd=code.indexOf('function previewRoster(',pickStart);
+ if(pickStart<0||pickEnd<0)throw Error('Efficiency upload preview not found.');
+ code=code.slice(0,pickStart)+picker.slice(picker.indexOf('function efficiencyPicker(){')).trim()+'\n'+code.slice(pickEnd);
+ const readStart=code.indexOf('async function parseEfficiencyBytes('),readEnd=code.indexOf('\nfunction agencyPicker(',readStart);
+ if(readStart<0||readEnd<0||typeof sourceReader!=='string'||!sourceReader.includes('async function parseEfficiencyBytes('))throw Error('The Efficiency source reader is missing.');
+ code=code.slice(0,readStart)+sourceReader.slice(sourceReader.indexOf('async function parseEfficiencyBytes(')).trim()+code.slice(readEnd);
  if(typeof efficiencyEngine!=='string'||!efficiencyEngine.includes('function parseShiftSheet('))throw Error('The updated Efficiency reader is missing.');
  const engineRx=/<script\b[^>]*\bid=["']daily-efficiency-engine["'][^>]*>[\s\S]*?<\/script\s*>/gi;if([...source.matchAll(engineRx)].length!==1)throw Error('One existing Efficiency engine is required.');
  source=source.replace(engineRx,()=>'<scr'+'ipt id="daily-efficiency-engine">'+efficiencyEngine+'</scr'+'ipt>');

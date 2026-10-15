@@ -6,6 +6,7 @@ const OUTPUT='Valid Packs',num=v=>v!==null&&v!==undefined&&String(v).trim()!==''
 const unitFromLine=line=>/^Unit\s+([ABCDK])\b/i.exec(String(line??'').trim())?.[1].toUpperCase()||'Unknown';
 function date(value,date1904){return E.timestamp(typeof value==='number'&&date1904?value+1462:value);}
 function productionDate(value,date1904){
+ if(typeof value==='string'&&/^\d+(?:\.\d+)?$/.test(value.trim())&&+value>=1&&+value<=2958465)value=+value;
  let d;if(typeof value==='number'&&Number.isFinite(value)){d=new Date(Date.UTC(1899,11,30)+Math.floor(value+(date1904?1462:0))*864e5).toISOString().slice(0,10);}
  else if(value instanceof Date)d=value.toISOString().slice(0,10);
  else{const text=String(value??'').trim(),iso=/^(\d{4})-(\d\d)-(\d\d)(?:$|[ T])/.exec(text),uk=/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})(?:$|[ T])/.exec(text);if(iso)d=iso[1]+'-'+iso[2]+'-'+iso[3];else if(uk)d=(uk[3].length===2?'20'+uk[3]:uk[3])+'-'+uk[2].padStart(2,'0')+'-'+uk[1].padStart(2,'0');}
@@ -21,7 +22,7 @@ function parseShiftSheet(sheet,H,meta){
  const rows=[],errors=[],dates=new Set(),index=name=>H.keys.indexOf(E.header(name)),ix=Object.fromEntries(['Run ID','Area','1 Code','Product Description','Packs Made','Pack Count Adjustment','Pack Count','Days Nights'].map(n=>[n,index(n)]));
  for(let i=H.at+1;i<sheet.grid.length;i++){const values=sheet.grid[i]||[],line=String(values[H.line]??'').trim();if(!line||/^(?:grand\s*)?total\b/i.test(line)||E.header(line)==='linename')continue;const get=n=>ix[n]>=0?values[ix[n]]:null,pd=productionDate(values[H.shift],sheet.date1904),unit=unitFromLine(line),units=num(values[H.output]),packsMade=num(get('Packs Made')),adjustment=num(get('Pack Count Adjustment')),sourceArea=String(get('Area')??'').trim().toUpperCase(),issues=[];
   if(!pd)issues.push('Missing / invalid Shift Date');if(units===null||units<0)issues.push('Missing / invalid '+H.outputField);if(unit==='Unknown')issues.push('Unmapped production line unit');if(pd)dates.add(pd);
-  const sourceRunId=String(get('Run ID')??'').trim(),runId=sourceRunId||'shift:'+sheet.name+':'+(i+1),row={runId,sourceRunId,identityBasis:sourceRunId?'Run ID':'worksheet and source row',productionDate:pd,dateBasis:'Shift Date',outputField:H.outputField,start:null,end:null,startWall:pd||String(values[H.shift]??''),endWall:'',unit,line,sourceArea,sku:String(get('1 Code')??''),description:String(get('Product Description')??''),units,packsMade,adjustment,packCount:num(get('Pack Count')),shift:String(get('Days Nights')??''),efficiencyLabourHours:null,sourceUplh:null,areaMismatch:!!sourceArea&&sourceArea!==unit,arithmeticMismatch:H.outputField==='Valid Packs'&&packsMade!==null&&adjustment!==null&&units!==null&&Math.abs(packsMade+adjustment-units)>1e-8,issues,sheet:sheet.name,row:i+1};rows.push(row);if(issues.length)errors.push({sheet:sheet.name,row:i+1,runId,issues});
+  const sourceRunId=String(get('Run ID')??'').trim(),sourceRow=sheet.sourceRows?.[i]??i+1,runId=sourceRunId||'shift:'+sheet.name+':'+sourceRow,row={runId,sourceRunId,identityBasis:sourceRunId?'Run ID':'worksheet and source row',productionDate:pd,dateBasis:'Shift Date',outputField:H.outputField,start:null,end:null,startWall:pd||String(values[H.shift]??''),endWall:'',unit,line,sourceArea,sku:String(get('1 Code')??''),description:String(get('Product Description')??''),units,packsMade,adjustment,packCount:num(get('Pack Count')),shift:String(get('Days Nights')??''),efficiencyLabourHours:null,sourceUplh:null,areaMismatch:!!sourceArea&&sourceArea!==unit,arithmeticMismatch:H.outputField==='Valid Packs'&&packsMade!==null&&adjustment!==null&&units!==null&&Math.abs(packsMade+adjustment-units)>1e-8,issues,sheet:sheet.name,row:sourceRow};rows.push(row);if(issues.length)errors.push({sheet:sheet.name,row:sourceRow,runId,issues});
  }
  if(!rows.length)throw Error('The Efficiency tab contains no output rows. Check Shift Date, Line Name and '+H.outputField+'.');const ordered=[...dates].sort();
  return{rows,meta:{...meta,outputField:H.outputField,dateBasis:'Shift Date',unitBasis:'Line Name (physical production unit)',timeBasis:'Printed production Shift Date; no run timestamps inferred',rowCount:rows.length,mapping:[{sheet:sheet.name,headerRow:H.at+1,columns:{'Line Name':H.line+1,'Shift Date':H.shift+1,[H.outputField]:H.output+1},headers:H.headers,outputField:H.outputField,date1904:!!sheet.date1904}],ignoredSheets:[],errors,observedFrom:null,observedTo:null,observedFirstDate:ordered[0]||null,observedLastDate:ordered.at(-1)||null,completeness:'Reported output rows; full-day completeness is not inferred'}};
@@ -48,6 +49,35 @@ function parse(sheets,meta={}){
  if(!rows.length)throw Error('No production-run rows found. Required headers: Product Start, Product End, Line Name, Run ID, Valid Packs.');
  const times=rows.flatMap(r=>[r.start,r.end]).filter(Number.isFinite);
  return {rows,meta:{...meta,outputField:OUTPUT,unitBasis:'Line Name (physical production unit)',timeBasis:'Product Start / Product End, Europe/London',rowCount:rows.length,mapping,ignoredSheets,errors,observedFrom:times.length?Math.min(...times):null,observedTo:times.length?Math.max(...times):null,completeness:'Imported run rows; full export completeness not inferred from first/last run'}};
+}
+// CSV is read as text: Excel/US date auto-conversion must not change UK Shift Dates.
+function* csvRecords(text){
+ text=String(text).replace(/^\uFEFF/,'');let fields=[],value='',quoted=false,record=1;
+ const first=text.slice(0,text.search(/[\r\n]/)<0?text.length:text.search(/[\r\n]/)),separator=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',';
+ for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'){if(text[i+1]==='"'){value+='"';i++;}else quoted=false;}else value+=c;}
+  else if(c==='"'&&value==='')quoted=true;
+  else if(c===separator){fields.push(value);value='';}
+  else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;fields.push(value);yield{row:record++,values:fields};fields=[];value='';}
+  else value+=c;
+ }
+ if(quoted)throw Error('The CSV ends inside a quoted field. Export a complete CSV UTF-8 copy.');
+ if(value!==''||fields.length){fields.push(value);yield{row:record,values:fields};}
+}
+function parseCSV(text,meta={}){
+ const sheet={name:'Efficiency CSV',grid:[],sourceRows:[]};let H=null,sourceRows=0,outputRows=0,matchedRows=0,blankRows=0,first=null,last=null;
+ const selected=meta.productionDate||null;if(selected)E.windowFor(selected);
+ for(const record of csvRecords(text)){
+  const values=record.values;if(!H){sheet.grid.push(values);sheet.sourceRows.push(record.row);H=efficiencyHeader(sheet);if(!H&&sheet.grid.length>=60)throw Error('CSV headings not recognised. Export the Efficiency tab with Shift Date, Line Name and Valid Packs / Packs Made.');continue;}
+  sourceRows++;const line=String(values[H.line]??'').trim();if(!line||/^(?:grand\s*)?total\b/i.test(line)){blankRows++;continue;}
+  const pd=productionDate(values[H.shift],false);if(E.header(line)==='linename')continue;outputRows++;if(pd){if(!first||pd<first)first=pd;if(!last||pd>last)last=pd;}
+  // Keep original row numbers and only the selected day's rows, plus undated rows for review.
+  if(selected&&pd&&pd!==selected)continue;matchedRows++;sheet.grid.push(values);sheet.sourceRows.push(record.row);
+ }
+ if(!H)throw Error('CSV headings not recognised. Export the Efficiency tab with Shift Date, Line Name and Valid Packs / Packs Made.');
+ if(!matchedRows)throw Error('No Efficiency CSV output rows match production date '+(selected||'(not selected)')+'. Source dates: '+(first||'unknown')+' to '+(last||'unknown')+'. The previous report has been retained.');
+ const parsed=parseShiftSheet(sheet,H,meta);parsed.meta.sourceType='CSV UTF-8';parsed.meta.sourceSelection=selected?{productionDate:selected,rule:'Printed Shift Date',sourceOutputRows:outputRows,selectedRows:matchedRows}:null;parsed.meta.sourceDataRows=sourceRows;parsed.meta.skippedBlankOrTotalRows=blankRows;parsed.meta.observedFirstDate=first;parsed.meta.observedLastDate=last;
+ parsed.meta.sheetInspection=[{name:sheet.name,headerRow:sheet.sourceRows[H.at],headers:H.headers,worksheetRows:sourceRows+H.at+1,topRows:sheet.grid.slice(0,H.at+1),preview:sheet.grid.slice(H.at+1,H.at+7),previewOnly:true,date1904:false}];
+ return parsed;
 }
 function output(model,dateString){
  const W=E.windowFor(dateString),ids=model.dayEfficiency?.[dateString]||[],files=(model.efficiencyFiles||[]).filter(f=>ids.includes(f.meta.id)),rows=[],exceptions=[],groups=new Map(),blocked=new Set(),bounds=[];
@@ -79,5 +109,5 @@ function apply(model,labour){
  }
  labour.efficiency=eff;labour.exceptions.push(...eff.exceptions);return labour;
 }
-const api={parse,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
+const api={parse,parseCSV,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
 })(typeof window==='undefined'?globalThis:window);
