@@ -13,7 +13,7 @@ function productionDate(value,date1904){
  try{return d&&E.addDate(d,0)===d?d:null}catch{return null;}
 }
 function efficiencyHeader(sheet){
- for(let i=0;i<Math.min(sheet.grid.length,60);i++){const keys=(sheet.grid[i]||[]).map(E.header),find=names=>names.map(E.header).map(x=>keys.indexOf(x)).find(x=>x>=0)??-1;
+ for(let i=0;i<Math.min(sheet.grid.length,100);i++){const keys=(sheet.grid[i]||[]).map(E.header),find=names=>names.map(E.header).map(x=>keys.indexOf(x)).find(x=>x>=0)??-1;
   const line=find(['Line Name']),shift=find(['Shift Date','Operational Date','Production Shift Date','Date of Shift']),valid=find(['Valid Packs']),made=find(['Packs Made']);
   if(line>=0&&shift>=0&&(valid>=0||made>=0))return{at:i,headers:sheet.grid[i],keys,line,shift,output:valid>=0?valid:made,outputField:valid>=0?'Valid Packs':'Packs Made'};
  }return null;
@@ -109,5 +109,5 @@ function apply(model,labour){
  }
  labour.efficiency=eff;labour.exceptions.push(...eff.exceptions);return labour;
 }
-const api={parse,parseCSV,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
+const api={parse,parseCSV,efficiencyHeader,output,apply,unitFromLine,productionDate,outputField:OUTPUT};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DailyEfficiencyEngine=api;
 })(typeof window==='undefined'?globalThis:window);
