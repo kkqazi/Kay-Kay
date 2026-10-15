@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cockpit product register updater</title>
 <style>body{font:16px/1.6 system-ui,sans-serif;color:#17211c;background:#f3f5f3;margin:0;padding:28px}main{max-width:760px;background:white;padding:30px;margin:auto;border:1px solid #d8dfd9;border-radius:10px}h1{font-size:25px;margin-top:0}label{font-weight:650;display:block;margin-bottom:8px}input{max-width:100%;font:inherit}a{display:inline-block;padding:12px 16px;background:#17211c;color:white;border-radius:7px;text-decoration:none}a[hidden]{display:none}.note{color:#55615a;font-size:14px}#status{padding:14px;background:#f3f5f3}li{margin:7px 0}@media(max-width:600px){body{padding:12px}main{padding:18px}}</style></head><body><main>
-<h1>Add the product register to your cockpit</h1>
+<h1>Fix product units in your cockpit</h1>
 <p>View, edit, move, add, delete and restore SKU products, including unit, area and preferred line.</p>
 <ol><li>Save your current working cockpit first.</li><li>Select that latest saved Budget vs Actual HTML file below.</li><li>Download the updated copy and open it in Chrome or Edge.</li></ol>
 <label for="source">Choose your saved cockpit HTML</label><input id="source" type="file" accept=".html,.htm">
 <p id="status" role="status" aria-live="polite">No file selected.</p><a id="download" hidden>Download updated cockpit</a>
-<p class="note">This updater runs on your PC. Nothing is uploaded. Your original file and its saved records are retained. The updater also corrects the identified Bang Bang wrap mapping.</p>
+<p class="note">This updater runs on your PC. Nothing is uploaded. Your original file and its saved records are retained. The updater links the Bang Bang chicken wrap to Unit B in Quality reports, charts and complaint lists. Files with the earlier product register can also be updated.</p>
 <p class="note">In the updated file, use Operations &amp; People → Product register. Click Save product, then Save dashboard to keep future amendments in your master HTML.</p>
 </main><script id="product-register-payload" type="text/plain">/* Product master overlays. Source transactions and filed Finance totals remain intact. */
 (function(root){
@@ -58,7 +58,9 @@
  OPD.stdRows=()=>{const x=oldStdRows(),rev=reg();if(x===opdStdSource&&rev===opdStdRev)return opdStdCache;opdStdSource=x;opdStdRev=rev;return opdStdCache=x.map(projectRow);};
  OPD.stdDesc=c=>record(c)?.description||oldStdDesc(c);
  OPD.masterplan=function(){const x=oldMasterplan();return x?{...x,rows:x.rows.map(r=>{const p=record(r.sku);return p?{...r,su:p.unit,line:p.line}:r;})}:x;};
- function invalidate(){catalogCache=null;if(APP.E)APP.E.invalidate();if(OPD.invalidate)OPD.invalidate();}
+ // Quality has its own UPC join. Its exact sku_code links it to the editable FG register.
+ API.mapQuality=function(c,master){const r=master&&record(master.sku_code);if(r){c.unit=r.unit;c.productRegisterSku=r.code;}return c;};
+ function invalidate(){catalogCache=null;if(APP.E)APP.E.invalidate();if(OPD.invalidate)OPD.invalidate();if(typeof QM!=='undefined'&&QM.Q.ready)QM._build();}
  function catalog(){
   const v=version();
   if(catalogCache&&catalogVersion===v&&catalogEngine===APP.E)return catalogCache;
@@ -93,10 +95,10 @@
  API.restore=async function(code){const current=get(code);if(!current?.deleted)throw Error('This product is not deleted.');const at=new Date().toISOString(),r={...snapshot(current),deleted:false,revision:current.revision+1,updatedAt:at};await commit(next=>{next.records[current.code]=r;next.history.push({at,actor:actor(),action:'Restore',code:current.code,note:'Restored to active product register',before:snapshot(current),after:snapshot(r)});});return get(code);};
  async function initialise(){
   if(APP.store.productRegister&&APP.store.productRegister.version!==1)throw Error('This product register version is not supported. Existing data has been left unchanged.');
-  if(reg().bangBangFix20261015)return;
+  if(reg().bangBangFix20261015&&reg().qualitySkuLink20261015)return;
   const changes=[];const b=get('87958');if(b&&/BANG\s*BANG.*BUTTERNUT.*WRAP/i.test(b.description)&&!record(b.code))changes.push({...snapshot(b),unit:'B',line:'B4',note:'User correction: Bang Bang butternut wrap belongs to Unit B. Existing product-master line B4 retained.'});
-  const c=get('87926');if(c&&/BANG\s*BANG.*CHICKEN.*WRAP/i.test(c.description)&&c.unit==='B'&&lineUnit(c.line)==='A'&&!record(c.code))changes.push({...snapshot(c),line:'',note:'Existing A6 line conflicted with Unit B. Line cleared for review; choose the correct B line in the register.'});
-  const at=new Date().toISOString();await commit(next=>{for(const d of changes){const before=snapshot(get(d.code)),r={...d,deleted:false,revision:1,updatedAt:at};next.records[d.code]=r;next.history.push({at,actor:'Requested mapping correction',action:'Correct mapping',code:d.code,note:d.note,before,after:snapshot(r)});}next.bangBangFix20261015=true;});
+  const c=get('87926');if(c&&/BANG\s*BANG.*CHICKEN.*WRAP/i.test(c.description)&&!record(c.code))changes.push({...snapshot(c),unit:'B',line:lineUnit(c.line)&&lineUnit(c.line)!=='B'?'':c.line,note:'User correction: Bang Bang chicken wrap belongs to Unit B, including its Quality UPC mapping. A conflicting line is cleared for review.'});
+  const at=new Date().toISOString();await commit(next=>{for(const d of changes){const before=snapshot(get(d.code)),r={...d,deleted:false,revision:1,updatedAt:at};next.records[d.code]=r;next.history.push({at,actor:'Requested mapping correction',action:'Correct mapping',code:d.code,note:d.note,before,after:snapshot(r)});}next.bangBangFix20261015=true;next.qualitySkuLink20261015=true;});
  }
  function style(){if(document.getElementById('product-register-style'))return;const s=document.createElement('style');s.id='product-register-style';s.textContent=`
  .pr-app{max-width:1440px;margin:auto;min-width:0;color:var(--ink)}.pr-app h2{margin:0 0 6px;font-size:24px}.pr-app h3{margin:0 0 10px;font-size:17px}.pr-sub{color:var(--ink-2);font-size:13px;margin:0 0 14px;line-height:1.5}.pr-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:14px 0}.pr-controls label,.pr-field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:650}.pr-app input,.pr-app select,.pr-app textarea{font:inherit;font-size:13px;padding:9px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);min-width:0;max-width:100%}.pr-app input[type=search]{min-width:230px}.pr-app button,.pr-manage-link{padding:8px 11px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);font-size:12px;cursor:pointer}.pr-app button:disabled{opacity:.55;cursor:wait}.pr-app .pr-primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}.pr-box{border:1px solid var(--border);border-radius:9px;background:var(--surface);padding:18px;margin:14px 0;min-width:0}.pr-note{font-size:12px;color:var(--ink-2);line-height:1.5;margin:10px 0}.pr-scroll{overflow:auto;max-width:100%;min-width:0}.pr-table{width:100%;border-collapse:collapse;font-size:13px}.pr-table th,.pr-table td{padding:10px 9px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}.pr-table th{font-size:12px;color:var(--ink-2)}.pr-table small{display:block;color:var(--ink-2);font-size:11px;margin-top:4px}.pr-actions{display:flex;gap:5px;flex-wrap:wrap;min-width:155px}.pr-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pr-field textarea{resize:vertical;min-height:72px}.pr-span{grid-column:1/-1}.pr-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.pr-error{color:var(--bad,#a42020);font-size:13px;line-height:1.5;padding:10px 0}.pr-info{padding:11px 13px;border-left:3px solid var(--ink);background:var(--surface-2);font-size:12px;line-height:1.5;margin:12px 0}.pr-badge{display:inline-block;border:1px solid var(--border);border-radius:5px;padding:2px 6px;font-size:11px}.pr-kv{display:grid;grid-template-columns:160px minmax(0,1fr);gap:8px 16px;font-size:13px}.pr-kv dt{font-weight:650}.pr-kv dd{margin:0;overflow-wrap:anywhere}.pr-link{border:0!important;padding:0!important;text-align:left;background:transparent!important;text-decoration:underline}.pr-pager{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:12px 0;font-size:12px}.pr-app details>summary{cursor:pointer;font-size:13px;font-weight:650}.pr-app .tbl-wrap{min-width:0;max-width:100%}.pr-unsaved{font-size:12px;color:var(--ink-2)}
@@ -120,7 +122,7 @@
   if(!entry.edit&&x){
    box.append(el('dl','pr-kv','<dt>SKU</dt><dd>'+esc(x.code)+'</dd><dt>Description</dt><dd>'+esc(x.description)+'</dd><dt>Unit / area</dt><dd>'+esc(x.unit?'Unit '+x.unit:'Unassigned')+'</dd><dt>Area</dt><dd>'+esc(x.area||'Not set')+'</dd><dt>Line</dt><dd>'+esc(x.line||'Not set — choose the correct line')+'</dd><dt>Category</dt><dd>'+esc(x.category||'Not set')+'</dd><dt>Status</dt><dd>'+esc(x.deleted?'Deleted':'Active')+'</dd><dt>Latest note</dt><dd>'+esc(x.note||'No note')+'</dd>'));
    const actions=el('div','pr-toolbar');if(x.deleted)actions.append(button('Restore product',()=>restoreUI(x),'pr-primary'));else actions.append(button('Edit product',()=>open(x.code,true),'pr-primary'),button('Delete product',()=>removeUI(x)));box.append(actions);
-   const source=API.sources(x.code);box.append(el('div','pr-info','<b>Imported sources:</b> '+esc(source.sources.join(', ')||'Custom product')+'. Source units: '+esc(source.units.join(', ')||'None')+'. Source lines: '+esc(source.lines.join(', ')||'None')+'. The register changes the SKU allocation used by product analyses; source rows and filed Finance totals are retained. Recorded production-run lines remain as reported.'));
+   const source=API.sources(x.code);box.append(el('div','pr-info','<b>Imported sources:</b> '+esc(source.sources.join(', ')||'Custom product')+'. Source units: '+esc(source.units.join(', ')||'None')+'. Source lines: '+esc(source.lines.join(', ')||'None')+'. The register changes the SKU allocation used by product analyses and linked Quality complaints; source rows and filed Finance totals are retained. Recorded production-run lines remain as reported.'));
    const history=reg().history.filter(h=>h.code===x.code).slice().reverse(),h=el('details');h.append(el('summary','',esc('Change history · '+history.length)));const hbody=el('div');hbody.append(table([{title:'When / action',render:r=>esc(new Date(r.at).toLocaleString('en-GB'))+'<small>'+esc(r.action)+'</small>'},{title:'Changes',render:r=>esc(changesText(r.before,r.after))},{title:'Note',render:r=>esc(r.note||'')},{title:'Recorded by',render:r=>esc(r.actor)}],history));h.append(hbody);box.append(h);return;
   }
   if(x?.deleted){box.append(el('p','pr-info','Restore this product before editing.'));return;}
@@ -135,7 +137,7 @@
   form.onsubmit=async e=>{e.preventDefault();save.disabled=true;error.textContent='';try{const d={code:code.x.value,description:description.x.value,unit:unit.x.value,line:line.x.value,area:area.x.value,category:category.x.value,note:note.x.value};await API.save(d,{create:!x,originalCode:x?.code,expectedRevision:x?.revision||0});UIState.dirty=false;UIState.draft=null;UIState.editor={code:norm(d.code),edit:false};toast('Product saved in browser. Save dashboard to retain it in the HTML file.',6500);go(true);}catch(e){alertError(error,e);save.disabled=false;}};box.append(form);
  }
  function changesText(a,b){if(!a)return'Created product';return['description','unit','area','line','category','deleted'].filter(k=>(a[k]??'')!==(b[k]??'')).map(k=>k+': '+String(a[k]||'Not set')+' → '+String(b[k]||'Not set')).join('; ')||'Note updated';}
- function render(main){style();const host=el('div','pr-app');host.id='product-register';host.append(el('h2','','Product register'),el('p','pr-sub','Find a SKU, open its details, and amend its unit, area or line. Saved corrections are used in SKU product breakdowns and planning.'));if(bootError)host.append(el('div','pr-error',esc(bootError)));
+ function render(main){style();const host=el('div','pr-app');host.id='product-register';host.append(el('h2','','Product register'),el('p','pr-sub','Find a SKU, open its details, and amend its unit, area or line. Saved corrections are used in SKU product breakdowns, planning and Quality complaints linked by the master SKU code.'));if(bootError)host.append(el('div','pr-error',esc(bootError)));
   host.append(el('div','pr-info','Corrections apply to saved and future SKU rows. Source volume/hours, filed Finance totals and recorded production-run lines stay as reported. Delete removes a product from the active register; its historical records are retained and it can be restored. Use <b>Save dashboard</b> to keep changes inside your master HTML.'));
   const controls=el('div','pr-controls'),search=input('Search SKU / product / line','search',UIState.query,'search');search.x.id='pr-search';search.x.oninput=()=>{UIState.query=search.x.value;UIState.page=0;drawList();};
   const unit=select('Unit filter','filter-unit',[['ALL','All units'],...UNITS.map(u=>[u,'Unit '+u])],UIState.unit,v=>{UIState.unit=v;UIState.page=0;drawList();}),status=select('Status','filter-status',[['active','Active'],['deleted','Deleted'],['all','All'],['review','Needs mapping review']],UIState.status,v=>{UIState.status=v;UIState.page=0;drawList();});
@@ -155,21 +157,43 @@
  OPS.reg('product_register','Product register',main=>render(main),{order:19,group:'Production',tip:'View, edit, move, delete and restore SKU products'});
  const existingProducts=OPS.views.find(v=>v.key==='products');if(existingProducts){const f=existingProducts.fn;OPS.reg('products',existingProducts.label,(main,c,ctl)=>{main.append(button('Manage SKU products',start,'pr-manage-link'));return f(main,c,ctl);},{order:existingProducts.order,group:existingProducts.group,tip:existingProducts.tip});}
  const oldBva=VIEWS.bva;if(oldBva)VIEWS.bva=function(main){const bar=el('div','pr-toolbar');bar.append(button('Manage SKU areas and lines',start,'pr-manage-link'),el('span','pr-note','Product allocations follow saved register corrections. Finance totals remain as filed.'));main.append(bar);oldBva(main);};
- const oldBoot=boot;boot=async function(){await oldBoot();decorate(APP.E);const first=!APP.store.productRegister;try{await initialise();}catch(e){bootError=e.message;toast('Product register: '+e.message,8000);}if(first&&NAV.allowed('product_register'))APP.state.tab='product_register';go();};
+ const oldBoot=boot;boot=async function(){await oldBoot();decorate(APP.E);const first=!APP.store.productRegister;try{await initialise();await QM.load();QM._build();}catch(e){bootError=e.message;toast('Product register: '+e.message,8000);}if(first&&NAV.allowed('product_register'))APP.state.tab='product_register';go();};
  window.addEventListener('beforeunload',e=>{if(UIState.dirty){e.preventDefault();e.returnValue='';}});
 })(typeof window==='undefined'?globalThis:window);
 </script><script>
-(function(){'use strict';const input=document.getElementById('source'),status=document.getElementById('status'),download=document.getElementById('download');let url;
-input.onchange=async()=>{download.hidden=true;try{
+/* Code-only installer: update modules without changing saved data blocks. */
+(function(root){
+ 'use strict';
+ function installProductRegister(source,code){
+  if(!/<script\b[^>]*\bid=["']liveSnapMeta["']/i.test(source)||!source.includes('bva-script'))throw Error('Choose your latest saved Budget vs Actual cockpit HTML.');
+  const quality=/<script\b[^>]*\bid=["']quality-module["'][^>]*>([\s\S]*?)<\/script\s*>/gi;
+  const matches=[...source.matchAll(quality)];if(matches.length!==1)throw Error('The Quality module could not be identified safely. Your file has not been changed.');
+  const hook='if(window.ProductRegister)window.ProductRegister.mapQuality(c,hit); /* product-register-quality-link */';
+  let body=matches[0][1];
+  if(!body.includes('/* product-register-quality-link */')){
+   const anchor='c.fam = (man && man.family)';
+   if(body.split(anchor).length!==2)throw Error('This Quality version needs a different updater. Your file has not been changed.');
+   body=body.replace(anchor,()=>hook+'\n      '+anchor);
+  }
+  source=source.replace(quality,whole=>whole.replace(matches[0][1],()=>body));
+  const module=/<script\b[^>]*\bid=["']product-register-module["'][^>]*>[\s\S]*?<\/script\s*>/gi;
+  const installed=[...source.matchAll(module)];if(installed.length>1)throw Error('Multiple product registers found. Your file has not been changed.');
+  const block='<scr'+'ipt id="product-register-module">\n'+code+'\n</scr'+'ipt>';
+  if(installed.length)return source.replace(module,()=>block);
+  const end=[...source.matchAll(/<\/body\s*>/gi)].pop();if(!end)throw Error('The selected HTML has no closing body tag.');
+  return source.slice(0,end.index)+'\n'+block+'\n'+source.slice(end.index);
+ }
+ root.installProductRegister=installProductRegister;
+ if(typeof module!=='undefined'&&module.exports)module.exports=installProductRegister;
+})(typeof window==='undefined'?globalThis:window);
+
+(function(){'use strict';const input=document.getElementById('source'),status=document.getElementById('status'),download=document.getElementById('download');let url,request=0;
+input.onchange=async()=>{const current=++request;download.hidden=true;try{
  const file=input.files[0];if(!file)return;status.textContent='Checking your saved cockpit…';
- const source=await file.text();
- if(!/<script\b[^>]*id=["']liveSnapMeta["']/i.test(source)||!source.includes('bva-script'))throw Error('Choose your latest saved Budget vs Actual cockpit HTML.');
- if(/<script\b[^>]*id=["']product-register-module["']/i.test(source))throw Error('This file already has the product register. Open it and choose Operations & People → Product register.');
- const end=[...source.matchAll(/<\/body\s*>/gi)].pop();if(!end)throw Error('The selected HTML has no closing body tag.');
- const code=document.getElementById('product-register-payload').textContent;
- const result=source.slice(0,end.index)+'\n<scr'+'ipt id="product-register-module">\n'+code+'\n</scr'+'ipt>\n'+source.slice(end.index);
- if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(new Blob([result],{type:'text/html'}));download.href=url;download.download=file.name.replace(/\.html?$/i,'')+'_Product_Register.html';download.hidden=false;
- status.textContent='Ready. Click Download updated cockpit below, then open the new HTML file. Your original file is unchanged.';
-}catch(error){status.textContent=error.message;}};
+ const source=await file.text();if(current!==request)return;
+ const result=installProductRegister(source,document.getElementById('product-register-payload').textContent);
+ if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(new Blob([result],{type:'text/html'}));download.href=url;download.download=file.name.replace(/\.html?$/i,'')+'_Quality_Unit_Fix.html';download.hidden=false;
+ status.textContent='Ready. Click Download updated cockpit below, then open the new HTML file. Bang Bang Chicken Wrap will be in Unit B. Your saved records and original file are retained.';
+}catch(error){if(current===request)status.textContent=error.message;}};
 })();
 </script></body></html>

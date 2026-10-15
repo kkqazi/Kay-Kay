@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),install=require('../scripts/product-register-installer.js');
+const source=`<html><body><script id="liveSnapMeta" type="application/json">{"saved":"İ — $&"}</script><script id="bva-script">/* existing budget module */</script><script id="quality-module">function build(){c.fam = (man && man.family) ? man.family : 'Other';}</script></body></html>`;
+const code='/* register version 2 $& */',first=install(source,code),second=install(first,code);
+assert.equal(first,second,'Repeated updates must be identical');
+assert(first.includes('<script id="liveSnapMeta" type="application/json">{"saved":"İ — $&"}</script>'));
+assert.equal((first.match(/product-register-quality-link/g)||[]).length,1);
+assert.equal((first.match(/id="product-register-module"/g)||[]).length,1);
+const upgraded=install(first,'/* register version 3 */');assert(!upgraded.includes(code));assert(upgraded.includes('/* register version 3 */'));
+assert.throws(()=>install(source.replace('c.fam = (man && man.family)','unknown()'),code),/different updater/);
+assert.throws(()=>install(first.replace('</body>','<script id="product-register-module">bad</script></body>'),code),/Multiple/);
+console.log(JSON.stringify({status:'PASS',checks:7}));

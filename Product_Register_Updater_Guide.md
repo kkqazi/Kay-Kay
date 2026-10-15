@@ -2,11 +2,13 @@
 
 1. Download the ZIP from GitHub and extract it.
 2. Open `Cockpit_Product_Register_Updater.html` in Chrome or Edge.
-3. Select your latest **saved Budget vs Actual cockpit HTML**. Nothing is uploaded.
+3. Select your latest **saved Budget vs Actual cockpit HTML**. You can select a file that already has the earlier product register. Nothing is uploaded.
 4. Click **Download updated cockpit**, then open the new HTML file.
 5. Use **Operations & People → Product register**.
 
 You can view, edit, add, delete and restore SKU products, including unit, area, preferred line, description and category. Use **Save product**, then **Save dashboard** to retain future changes inside the HTML file.
+
+Bang Bang Chicken Wrap is allocated to Unit B in Quality complaint lists, unit briefs, charts and exports. Quality now uses the master SKU code to follow product-register unit corrections, overriding an older conflicting manual unit mapping. Future imports use the same correction. Existing product edits and history are retained when upgrading.
 
 The identified Bang Bang butternut wrap is allocated to B/B4. The chicken wrap's conflicting A6 preferred line is cleared for review; choose its correct B line.
 
