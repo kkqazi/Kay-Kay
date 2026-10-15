@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),{context,create}=require('../scripts/bva-commentary.js');
+const F={n:(v,d=0)=>v.toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d}),u:v=>v.toFixed(2)},CT=create(F),days=Array.from({length:7},(_,d)=>({w:1,d}));
+const sub={dl:[7000],vol:[100000]},budget={ops:[6800],hrs:[6000],vol:[100000]};let requested;
+const E={settings:{budgetVersion:'Latest approved'},submission:()=>sub,budgetVersion:name=>{requested=name;return{units:{ABC:budget}}},dayShare:()=>[.1,.15,.15,.15,.15,.15,.15]};
+let checks=0;const ok=(value,message)=>{assert(value,message);checks++};
+const c=context(E,27,'ABC',days);ok(c.weeklyReduction===200);ok(c.operatingReduction===200);ok(c.goe===800);ok(c.totalReduction===1000);ok(requested==='Latest approved');
+const partial=context(E,27,'ABC',days.slice(0,2));ok(Math.abs(partial.operatingReduction-50)<1e-9);ok(partial.weeklyReduction===200);ok(context(E,27,'ABC',[...days,days[0]]).operatingReduction===200);
+const T={u:'ABC',line:-100,pace:50,goeFx:-150,Ua:50,Ub:55,rate:20,budgetContext:c},good={tot:{n:4,eff:1.25,on:3}},bad={tot:{n:4,eff:.9,on:1}};
+ok(/125%/.test(CT.lines(T,good)));ok(/optimistic planning assumption/.test(CT.assumptions(T,good)));ok(!/optimistic planning assumption/.test(CT.assumptions(T,bad)));ok(/review/i.test(CT.focus(T,good)));ok(/around <b>200 hours per week/.test(CT.assumptions(T,good)));ok(!/missing|robbed|Finance removed/i.test(CT.assumptions(T,good)+CT.lines(T,good)+CT.pace(T)));
+budget.ops[0]=6650;const changed=context(E,27,'ABC',days);ok(changed.weeklyReduction===350);ok(/350 hours per week/.test(CT.assumptions({...T,budgetContext:changed},good)));
+budget.vol[0]=110000;const volume=context(E,27,'ABC',days);ok(volume.volumeChanged);ok(!/optimistic/.test(CT.assumptions({...T,budgetContext:volume},good)));ok(/like-for-like/.test(CT.assumptions({...T,budgetContext:volume},good)));
+ok(context(E,27,'D',days)===null);ok(context(E,26,'ABC',days)===null);ok(context({...E,submission:()=>null},27,'ABC',days)===null);
+ok(!/strong line/.test(CT.assumptions({...T,budgetContext:null},null)));ok(!/optimistic/.test(CT.assumptions({...T,line:100},good)));ok(/For ABC within the site/.test(CT.assumptions({...T,u:'SITE'},good)));ok(/50 hours/.test(CT.day({...T,budgetContext:partial})));
+ok(!/optimistic planning/.test(CT.assumptions({...T,u:'SITE',budgetContext:{...c,paidHoursVariance:100}},good)));
+console.log(JSON.stringify({status:'PASS',checks}));
